@@ -1,10 +1,9 @@
 # nb6-moonshot-team5
 
-# 🎓 {팀 5}
+# 🎓 팀 5
 
 > 코드잇 노드 백엔드 6기
-> 백엔드 초급 프로젝트 : SEVEN
-> 내용 템플릿만 가져옴 (수정 중)
+> 백엔드 중급 프로젝트 : MoonShot
 
 📎 **팀 협업 문서:** [링크 게시 예정]
 
@@ -25,24 +24,26 @@
 ## 🧩 프로젝트 소개
 
 **목표:**  
-프로그래밍 교육 사이트의 **백엔드 시스템 구축**을 통해 회원 관리, 권한 제어, 강의 정보 관리 등 핵심 기능을 구현합니다.
+일정 관리 사이트의 **백엔드 시스템 구축**을 통해 인증, 회원, 프로젝트, 할 일등 핵심 기능을 구현합니다.
 
 **주요 기능:**
 
 - 소셜 로그인 (Google OAuth)
-- 회원 권한별 접근 제어
-- 수강생 및 관리자 정보 관리
-- 실시간 접속 및 시간 정보 관리
+- 토큰 기반 인증
+- 프로젝트 등록 및 수정, 삭제
+- 할 일, 하위 할 일
+- 멤버 초대 및 추가, 제외
+- 대시보드
 
 ---
 
 ## 🛠️ 기술 스택
 
-| 구분          | 기술                   |
-| ------------- | ---------------------- |
-| **Backend**   | Express.js, Prisma ORM |
-| **Database**  | MongoDB                |
-| **공통 Tool** | Git & Github, Discord  |
+| 구분          | 기술                          |
+| ------------- | ----------------------------- |
+| **Backend**   | Express.js, Prisma ORM        |
+| **Database**  | Postgresql                    |
+| **공통 Tool** | Git & Github, Discord, Notion |
 
 ---
 
@@ -114,39 +115,50 @@
 
 ## 📁 프로젝트 구조
 
-project/
-┣ src/
-┃ ┣ config/
-┃ ┃ ┗ db.ts
-┃ ┣ controllers/
-┃ ┃ ┣ auth.controller.ts
-┃ ┃ ┗ user.controller.ts
-┃ ┣ middleware/
-┃ ┃ ┣ auth.middleware.ts
-┃ ┃ ┗ error.middleware.ts
-┃ ┣ models/
-┃ ┃ ┣ user.model.ts
-┃ ┃ ┗ course.model.ts
-┃ ┣ routes/
-┃ ┃ ┣ auth.routes.ts
-┃ ┃ ┗ user.routes.ts
-┃ ┣ services/
-┃ ┃ ┣ auth.service.ts
-┃ ┃ ┗ user.service.ts
-┃ ┣ utils/
-┃ ┃ ┣ jwt.ts
-┃ ┃ ┣ constants.ts
-┃ ┃ ┗ logger.ts
-┃ ┣ app.ts
-┃ ┗ server.ts
-┣ prisma/
-┃ ┣ schema.prisma
-┃ ┗ seed.ts
-┣ .env
-┣ .gitignore
-┣ package.json
-┣ tsconfig.json
-┗ README.md
+```bash
+NB6-MoonShot-TEAM5
+├── prisma
+│   ├── migrations
+│   ├── schema.prisma
+│   └── seed.js
+├── src
+│   ├── constrollers
+│   │   ├── badge-controller.js
+│   │   ├── group-controller.js
+│   │   ├── group-like-count-controller.js
+│   │   ├── health-controller.js
+│   │   ├── image-controller.js
+│   │   ├── participant-controller.js
+│   │   ├── ranking-controller.js
+│   │   └── record-controller.js
+│   ├── middlewares
+│   │   ├── error-handler.js
+│   │   └── upload.js
+│   ├── routes
+│   │   ├── group-like-count-routes.js
+│   │   ├── group-routes.js
+│   │   ├── health-routes.js
+│   │   ├── image-routes.js
+│   │   ├── participant-routes.js
+│   │   ├── ranking-routes.js
+│   │   └── record-routes.js
+│   ├── utils
+│   │   ├── date-range.js
+│   │   ├── debug.js
+│   │   ├── discord-msg-utils.js
+│   │   ├── image-utils.js
+│   │   └── prisma.js
+│   ├── validators
+│   │   └── record-validatior.js
+│   └── app.js
+├── .env
+├── .gitignore
+├── .prettierrc
+├── .prettierrc.json
+├── package-lock.json
+├── package.json
+└── README.md
+```
 
 ---
 
@@ -163,4 +175,4 @@ project/
 ---
 
 📌 **작성일:** 2025-11-03  
-📌 **작성자:** nb6기 Team1
+📌 **작성자:** nb6기 Team5
