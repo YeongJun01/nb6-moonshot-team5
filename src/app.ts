@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { PORT } from './lib/constants';
+import { defaultNotFoundHandler, errorHandler } from './handler/errorHandler';
 
 //express app 생성
 const app = express();
