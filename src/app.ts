@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { PORT } from './lib/constants';
 import { defaultNotFoundHandler, errorHandler } from './handler/errorHandler';
+import projectRouter from './router/projectsRouter';
 
 //express app 생성
 const app = express();
@@ -15,6 +16,8 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
+
+app.use('/projects', projectRouter);
 
 app.use(defaultNotFoundHandler);
 app.use(errorHandler);

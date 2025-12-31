@@ -1,0 +1,22 @@
+POST http://localhost:3000/projects
+Content-Type: application/json
+
+{
+  "name": "프로젝트 1",
+  "description": "프로젝트 1 설명"
+}
+
+###
+GET http://localhost:3000/projects/8
+
+###
+PATCH http://localhost:3000/projects/8
+Content-Type: application/json
+
+{
+  "name": "수정된 프로젝트",
+  "description": "수정된 프로젝트 입니다."
+}
+
+###
+DELETE http://localhost:3000/projects/8
