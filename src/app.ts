@@ -3,7 +3,7 @@ import cors from 'cors';
 import { PORT } from './lib/constants';
 import { defaultNotFoundHandler, errorHandler } from './middleware/errorHandler';
 import authRouter from './router/auth-router';
-import projectRouter from './router/projectsRouter';
+import projectRouter from './router/project-router';
 
 //express app 생성
 const app = express();
