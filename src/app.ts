@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import { PORT } from './lib/constants';
-import { defaultNotFoundHandler, errorHandler } from './handler/errorHandler';
+import { defaultNotFoundHandler, errorHandler } from './middleware/errorHandler';
+import authRouter from './router/auth-router';
 import projectRouter from './router/projectsRouter';
 
 //express app 생성
@@ -17,8 +18,14 @@ app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
 
+//기타 라우트 및 미들웨어 설정
+
+//auth
+app.use('/auth', authRouter);
+//projects
 app.use('/projects', projectRouter);
 
+//404 처리 미들웨어 및 에러 핸들러 등록
 app.use(defaultNotFoundHandler);
 app.use(errorHandler);
 

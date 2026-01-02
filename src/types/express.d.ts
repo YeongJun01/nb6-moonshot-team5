@@ -1,15 +1,15 @@
-import 'express';
+// import 'express';
 
-declare global {
-  namespace Express {
-    interface User {
-      id: number;
-    }
+// declare global {
+//   namespace Express {
+//     interface User {
+//       id: number;
+//     }
 
-    interface Request {
-      user: User;
-    }
-  }
-}
+//     interface Request {
+//       user: User;
+//     }
+//   }
+// }
 
-export {};
+// export {};
