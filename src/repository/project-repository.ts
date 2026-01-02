@@ -61,9 +61,6 @@ class ProjectRepository {
     });
   }
 
-  // -------------------------
-  // private helpers
-  // -------------------------
   private async getMemberCount(projectId: number) {
     return prisma.projectMember.count({ where: { projectId } });
   }

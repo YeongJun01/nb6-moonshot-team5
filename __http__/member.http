@@ -1,0 +1,4 @@
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NjczNTEwMDEsImV4cCI6MTc2NzM1NDYwMX0.RqfIH0PgLcCTtj21tyKPNLB0p19R-s5PbjjJm7Lkqtg
+GET  http://localhost:3000/projects/14/users
+Authorization: Bearer {{accessToken}}
+

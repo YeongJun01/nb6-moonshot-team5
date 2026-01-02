@@ -1,4 +1,4 @@
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NjczMjczNjQsImV4cCI6MTc2NzMzMDk2NH0.wZFlxuZefilXr6umf9hDhuET14PvLMHYhKNiDAwLlaE
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NjczNTEwMDEsImV4cCI6MTc2NzM1NDYwMX0.RqfIH0PgLcCTtj21tyKPNLB0p19R-s5PbjjJm7Lkqtg
 POST http://localhost:3000/projects
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
@@ -9,7 +9,7 @@ Authorization: Bearer {{accessToken}}
 }
 
 ###
-GET http://localhost:3000/projects/13
+GET http://localhost:3000/projects/2
 Authorization: Bearer {{accessToken}}
 
 ###

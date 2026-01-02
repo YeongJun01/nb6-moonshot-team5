@@ -46,7 +46,6 @@ class ProjectsService {
     projectId: number,
     data: UpdateProjectData,
   ): Promise<ApiProject> {
-    // 존재 확인(레포는 null 반환)
     const existing = await projectsRepository.getProject(projectId);
     if (!existing) throw new NotFoundError('project');
 
