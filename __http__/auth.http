@@ -1,0 +1,24 @@
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+    "name": "testuser2",
+    "email": "test2@example.com",
+    "password": "testpassword"
+}
+
+###
+
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "test2@example.com",
+    "password": "testpassword"
+}
+
+###
+
+POST http://localhost:3000/auth/refresh
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NjczMTg2MDEsImV4cCI6MTc2NzMyMjIwMX0.c0t3JhNmGr1YpySBsAtc8qdxti1Axn7xF4SdPuPu1BA
