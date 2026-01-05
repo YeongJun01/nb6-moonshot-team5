@@ -9,6 +9,8 @@ authRouter
   .post('/register', asyncHandler(authController.register))
   .post('/login', asyncHandler(authController.login))
   .post('/refresh', authenticateRefresh, asyncHandler(authController.refreshToken))
-  .post('/logout', asyncHandler(authController.logout));
+  .post('/logout', asyncHandler(authController.logout))
+  .get('/google', asyncHandler(authController.googleLogin))
+  .get('/google/callback', asyncHandler(authController.googleCallback));
 
 export default authRouter;

@@ -3,6 +3,7 @@ import authRepository from '../repository/auth-repository';
 import { generateToken, verifyRefreshToken } from '../lib/token';
 import UnauthorizedError from '../lib/errors/UnauthorizedError';
 import ConflictError from '../lib/errors/ConflictError';
+import { exchangeCodeForGoogleToken, verifyGoogleIdToken } from '../lib/google';
 
 class AuthService {
   //회원가입
@@ -89,6 +90,50 @@ class AuthService {
     //await authRepository.createUserToken(userId, accessToken, newRefreshToken, expiresAt);
 
     return { accessToken, newRefreshToken };
+  }
+
+  //구글 로그인
+  async handleGoogleCallback(code: string) {
+    // code → Google token
+    const { access_token, refresh_token, id_token, expires_in } = await exchangeCodeForGoogleToken(
+      code,
+    );
+
+    if (!id_token) {
+      throw new UnauthorizedError('Google 인증 실패');
+    }
+
+    // id_token 검증
+    const payload = await verifyGoogleIdToken(id_token);
+
+    if (!payload?.sub || !payload.email) {
+      throw new UnauthorizedError('유효하지 않은 Google 사용자');
+    }
+
+    // User / UserOauth upsert
+    const user = await authRepository.upsertGoogleUser(
+      {
+        id: payload.sub,
+        email: payload.email,
+        name: payload.name ?? 'Google User',
+        picture: payload.picture,
+      },
+      access_token,
+      refresh_token,
+      new Date(Date.now() + expires_in * 1000),
+    );
+
+    // 우리 서비스 JWT 발급
+    const { accessToken, refreshToken } = generateToken(user.id);
+
+    await authRepository.createUserToken(
+      user.id,
+      accessToken,
+      refreshToken,
+      new Date(Date.now() + 60 * 60 * 1000),
+    );
+
+    return { accessToken, refreshToken };
   }
 }
 
