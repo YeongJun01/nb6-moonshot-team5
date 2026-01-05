@@ -7,6 +7,8 @@ import authRouter from './router/auth-router';
 import projectRouter from './router/project-router';
 import memberRouter from './router/member-router';
 import invitationRouter from './router/invitation-router';
+import attachmentRouter from './router/attachment-router';
+import path from 'node:path';
 
 //express app 생성
 const app = express();
@@ -17,11 +19,18 @@ app.use(cors());
 //JSON 파싱 미들웨어 설정
 app.use(express.json());
 
+//파일 업로드를 위한 정적 파일 서비스 설정
+app.use('/attachments', express.static(path.join(__dirname, '../public/attachments')));
+
+//기본 라우트 설정
 app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
 
 //기타 라우트 및 미들웨어 설정
+
+//첨부파일
+app.use('/files', attachmentRouter);
 
 //auth
 app.use('/auth', authRouter);
