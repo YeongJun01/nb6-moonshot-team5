@@ -49,6 +49,35 @@ class AuthController {
     res.status(200).send({ accessToken, refreshToken: newRefreshToken });
   }
 
+  //Google OAuth 로그인
+  async googleLogin(req: Request, res: Response) {
+    const params = new URLSearchParams({
+      client_id: process.env.GOOGLE_CLIENT_ID!,
+      redirect_uri: `${process.env.BACKEND_URL}/auth/google/callback`,
+      response_type: 'code',
+      scope: 'openid email profile',
+      access_type: 'offline',
+      prompt: 'consent',
+    });
+
+    res.redirect(`https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`);
+  }
+
+  // ② Google → callback
+  async googleCallback(req: Request, res: Response) {
+    const code = req.query.code as string;
+
+    if (!code) {
+      throw new UnauthorizedError('Google 인증 실패');
+    }
+
+    const { accessToken, refreshToken } = await authService.handleGoogleCallback(code);
+
+    // 프론트로 redirect
+    res.redirect(
+      `${process.env.FRONTEND_URL}/oauth/callback?accessToken=${accessToken}&refreshToken=${refreshToken}`,
+    );
+  }
   //로그아웃
   async logout(req: Request, res: Response) {
     //클라이언트 측에서 토큰 삭제 처리
