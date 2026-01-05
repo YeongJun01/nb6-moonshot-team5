@@ -100,7 +100,7 @@ class AuthService {
     );
 
     if (!id_token) {
-      throw new UnauthorizedError('Google 인증 실패');
+      throw new UnauthorizedError('Google 인증 실패1');
     }
 
     // id_token 검증

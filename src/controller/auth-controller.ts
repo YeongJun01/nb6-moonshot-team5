@@ -56,7 +56,6 @@ class AuthController {
       redirect_uri: `${process.env.BACKEND_URL}/auth/google/callback`,
       response_type: 'code',
       scope: 'openid email profile',
-      access_type: 'offline',
       prompt: 'consent',
     });
 
@@ -73,10 +72,8 @@ class AuthController {
 
     const { accessToken, refreshToken } = await authService.handleGoogleCallback(code);
 
-    // 프론트로 redirect
-    res.redirect(
-      `${process.env.FRONTEND_URL}/oauth/callback?accessToken=${accessToken}&refreshToken=${refreshToken}`,
-    );
+    //  redirect
+    res.redirect(`${process.env.FRONTEND_URL}/`); //유저 api 만든 뒤 수정
   }
   //로그아웃
   async logout(req: Request, res: Response) {
