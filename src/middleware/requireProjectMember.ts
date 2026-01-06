@@ -20,6 +20,7 @@ export async function requireProjectMember(
   }
 
   const { id } = create({ id: rawId }, IdParamsStruct);
+
   const project = await prisma.project.findUnique({
     where: { id },
     select: { id: true },
@@ -28,6 +29,7 @@ export async function requireProjectMember(
   if (!project) {
     return next(new NotFoundError('존재하지 않는 프로젝트입니다.'));
   }
+
   const member = await prisma.projectMember.findUnique({
     where: {
       projectId_userId: {

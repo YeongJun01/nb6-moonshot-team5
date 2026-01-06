@@ -1,20 +1,21 @@
-import { Resend } from 'resend';
+import sgMail from '@sendgrid/mail';
 
-function getResend() {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    throw new Error('RESEND_API_KEY 가 없습니다.');
-  }
+sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
-  return new Resend(apiKey);
-}
-
-export async function sendInvitationEmail(to: string, acceptUrl: string) {
-  const resend = getResend();
-  const result = await resend.emails.send({
-    from: 'MoonShot <onboarding@resend.dev>',
+export async function sendInvitationEmail(to: string, acceptUrl: string, projectName: string) {
+  const msg = {
     to,
-    subject: '프로젝트 초대입니다.',
-    html: `<p>프로젝트 초대입니다!</p><a href="${acceptUrl}">수락하기</a>`,
-  });
+    from: {
+      email: 'pkeonyz@gmail.com',
+      name: 'Team5 Moonshot',
+    },
+    subject: `${projectName} 프로젝트 초대`,
+    html: `
+      <h2>${projectName} 프로젝트 초대</h2>
+      <p>아래 링크를 클릭해 주세요.</p>
+      <a href="${acceptUrl}">초대 수락</a>
+    `,
+  };
+
+  await sgMail.send(msg);
 }

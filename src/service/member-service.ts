@@ -10,6 +10,7 @@ import { sendInvitationEmail } from '../lib/mailer';
 import { send } from 'node:process';
 import prisma from '../lib/prisma';
 import { InvitationStatus } from '@prisma/client';
+import { buildInvitationAcceptUrl } from '../lib/url';
 
 class MembersService {
   async getProjectMembers(
@@ -41,8 +42,9 @@ class MembersService {
       throw new NotFoundError('가입되지 않은 이메일입니다.');
     }
 
+    const project = await projectRepository.findById(id);
     //프로젝트가 있는지
-    if (!(await projectRepository.findById(id))) {
+    if (!project) {
       throw new NotFoundError('프로젝트가 없습니다.');
     }
 
@@ -53,9 +55,8 @@ class MembersService {
 
     const invitation = await memberRepository.inviteProjectMember(id, email);
 
-    const acceptUrl = `http://localhost:3000/invitations/${invitation.id}/accept`;
-
-    await sendInvitationEmail(email, acceptUrl);
+    const acceptUrl = buildInvitationAcceptUrl(invitation.id);
+    await sendInvitationEmail(email, acceptUrl, project.name);
 
     return { invitationId: invitation.id };
   }

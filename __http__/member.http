@@ -3,6 +3,10 @@
 GET http://localhost:3000/projects/16/users
 Authorization: Bearer {{accessToken}}
 
+###프로젝트 멤버 조회(쿼리)
+GET http://localhost:3000/projects/16/users?page=1&limit=3
+Authorization: Bearer {{accessToken}}
+
 ###프로젝트에서 유저 제외하기
 DELETE http://localhost:3000/projects/16/users/11
 Authorization: Bearer {{accessToken}}
