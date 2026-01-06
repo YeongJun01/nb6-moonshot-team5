@@ -1,17 +1,12 @@
-import type { Response, NextFunction } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import prisma from '../lib/prisma';
 import ForbiddenError from '../lib/errors/ForbiddenError';
 import BadRequestError from '../lib/errors/BadRequestError';
-import type { AuthenticatedRequest } from '../types/auth';
 import { create } from 'superstruct';
 import { IdParamsStruct } from '../structs/common-structs';
 import NotFoundError from '../lib/errors/NotFoundError';
 
-export async function requireProjectMember(
-  req: AuthenticatedRequest,
-  res: Response,
-  next: NextFunction,
-) {
+export async function requireProjectMember(req: Request, res: Response, next: NextFunction) {
   if (!req.user) return next(new ForbiddenError('로그인이 필요합니다'));
 
   const rawId = req.params.id;
@@ -47,11 +42,7 @@ export async function requireProjectMember(
   return next();
 }
 
-export async function requireInvitationAccess(
-  req: AuthenticatedRequest,
-  res: Response,
-  next: NextFunction,
-) {
+export async function requireInvitationAccess(req: Request, res: Response, next: NextFunction) {
   if (!req.user) return next(new ForbiddenError('로그인이 필요합니다'));
 
   const rawId = req.params.id;
@@ -85,7 +76,7 @@ export async function requireInvitationAccess(
 }
 
 export function requireProjectRole(required: 'OWNER' | 'MEMBER') {
-  return async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
     if (!req.projectMember) return next(new ForbiddenError('프로젝트 멤버가 아닙니다'));
 
     if (required === 'OWNER' && req.projectMember.role != 'OWNER') {

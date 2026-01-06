@@ -1,4 +1,4 @@
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjExLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzY3NjYzMDQ1LCJleHAiOjE3Njc2NjY2NDV9.3RqkIwC9BGtFyBaOb1RxGGZ7vUBpfBtxesJU9e-j_v0
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjExLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzY3NjgzMjM2LCJleHAiOjE3Njc2ODY4MzZ9.MbdR0gQ3d5r9niz4ZNGXMnAK60v7ywBkNpVOX3xxoTc
 ###프로젝트 멤버 조회
 GET http://localhost:3000/projects/16/users
 Authorization: Bearer {{accessToken}}
