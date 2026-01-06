@@ -9,6 +9,7 @@ import memberRouter from './router/member-router';
 import invitationRouter from './router/invitation-router';
 import attachmentRouter from './router/attachment-router';
 import path from 'node:path';
+import userRouter from './router/user-router';
 
 //express app 생성
 const app = express();
@@ -34,6 +35,10 @@ app.use('/files', attachmentRouter);
 
 //auth
 app.use('/auth', authRouter);
+
+//user
+app.use('/users', userRouter);
+
 //projects
 app.use('/projects', projectRouter);
 //members
