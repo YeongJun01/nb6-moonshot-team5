@@ -16,8 +16,16 @@ memberRouter
   .delete(
     '/:id/users/:userId',
     authenticateAccess,
+    requireProjectMember,
     requireProjectRole('OWNER'),
     asyncHandler(memberController.deleteProjectMembers),
+  )
+  .post(
+    '/:id/invitations',
+    authenticateAccess,
+    requireProjectMember,
+    requireProjectRole('OWNER'),
+    asyncHandler(memberController.inviteProjectMember),
   );
 
 export default memberRouter;

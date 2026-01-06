@@ -1,6 +1,8 @@
 import prisma from '../lib/prisma';
 import { PagePaginationResult } from '../types/pagination';
 import { MemberListDTO } from '../dto/member-list-DTO';
+import { InvitationStatus } from '@prisma/client';
+import ForbiddenError from '../lib/errors/ForbiddenError';
 
 class MembersRepository {
   async getProjectMembers(projectId: number, page: number, limit: number) {
@@ -90,6 +92,49 @@ class MembersRepository {
   async deleteProjectMember(projectId: number, userId: number) {
     return prisma.projectMember.delete({
       where: { projectId_userId: { projectId, userId } },
+    });
+  }
+
+  async isMemberByEmail(email: string): Promise<number | null> {
+    const existMember = await prisma.user.findUnique({ where: { email }, select: { id: true } });
+
+    return existMember?.id ?? null;
+  }
+
+  async inviteProjectMember(projectId: number, email: string) {
+    //기존에 보낸 초대있을 수 있으니 upsert(create + update)
+    return prisma.invitation.upsert({
+      where: { projectId_invitedEmail: { projectId, invitedEmail: email } },
+      update: { status: 'PENDING' },
+      create: { projectId, invitedEmail: email, status: 'PENDING' },
+    });
+  }
+
+  async findMember(projectId: number, userId: number) {
+    return prisma.projectMember.findUnique({
+      where: {
+        projectId_userId: {
+          projectId,
+          userId,
+        },
+      },
+    });
+  }
+
+  async createProjectMember(projectId: number, userId: number) {
+    return prisma.projectMember.create({
+      data: {
+        projectId,
+        userId,
+        role: 'MEMBER',
+      },
+    });
+  }
+
+  async findEmailById(userId: number) {
+    return prisma.user.findUnique({
+      where: { id: userId },
+      select: { email: true },
     });
   }
 }

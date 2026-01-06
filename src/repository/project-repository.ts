@@ -33,6 +33,10 @@ class ProjectRepository {
     };
   }
 
+  async findById(projectId: number) {
+    return await prisma.project.findUnique({ where: { id: projectId } });
+  }
+
   async updateProject(userId: number, projectId: number, data: Partial<Project>) {
     await this.checkOwner(userId, projectId);
 
