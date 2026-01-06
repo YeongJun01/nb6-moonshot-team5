@@ -46,9 +46,8 @@ class ProjectsService {
     projectId: number,
     data: UpdateProjectData,
   ): Promise<ApiProject> {
-    // 존재 확인(레포는 null 반환)
-    const existing = await projectsRepository.getProject(projectId);
-    if (!existing) throw new NotFoundError('project');
+    const existing = await projectsRepository.findById(projectId);
+    if (!existing) throw new NotFoundError('프로젝트가 없습니다.');
 
     const result = await projectsRepository.updateProject(userId, projectId, data);
 
@@ -64,8 +63,8 @@ class ProjectsService {
   }
 
   async deleteProject(userId: number, projectId: number): Promise<void> {
-    const existing = await projectsRepository.getProject(projectId);
-    if (!existing) throw new NotFoundError('project');
+    const existing = await projectsRepository.findById(projectId);
+    if (!existing) throw new NotFoundError('프로젝트가 없습니다.');
 
     await projectsRepository.deleteProject(userId, projectId);
   }

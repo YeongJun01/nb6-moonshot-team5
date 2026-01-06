@@ -1,9 +1,12 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import { PORT } from './lib/constants';
 import { defaultNotFoundHandler, errorHandler } from './middleware/errorHandler';
 import authRouter from './router/auth-router';
 import projectRouter from './router/project-router';
+import memberRouter from './router/member-router';
+import invitationRouter from './router/invitation-router';
 
 //express app 생성
 const app = express();
@@ -24,6 +27,10 @@ app.get('/', (req, res) => {
 app.use('/auth', authRouter);
 //projects
 app.use('/projects', projectRouter);
+//members
+app.use('/projects', memberRouter);
+//invitations
+app.use('/invitations', invitationRouter);
 
 //404 처리 미들웨어 및 에러 핸들러 등록
 app.use(defaultNotFoundHandler);

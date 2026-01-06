@@ -1,4 +1,4 @@
-import type { Response } from 'express';
+import type { Request, Response } from 'express';
 import { create } from 'superstruct';
 import { CreateProjectStruct, UpdateProjectStruct } from '../structs/project-structs';
 import { IdParamsStruct } from '../structs/common-structs';
@@ -7,7 +7,7 @@ import type { AuthenticatedRequest } from '../types/auth';
 import UnauthorizedError from '../lib/errors/UnauthorizedError';
 
 class ProjectsController {
-  async createProject(req: AuthenticatedRequest, res: Response) {
+  async createProject(req: Request, res: Response) {
     if (!req.user) {
       throw new UnauthorizedError('로그인이 필요합니다');
     }
@@ -18,7 +18,7 @@ class ProjectsController {
     res.status(201).send(project);
   }
 
-  async getProject(req: AuthenticatedRequest, res: Response) {
+  async getProject(req: Request, res: Response) {
     if (!req.user) {
       throw new UnauthorizedError('로그인이 필요합니다');
     }
@@ -29,7 +29,7 @@ class ProjectsController {
     res.send(project);
   }
 
-  async updateProject(req: AuthenticatedRequest, res: Response) {
+  async updateProject(req: Request, res: Response) {
     if (!req.user) {
       throw new UnauthorizedError('로그인이 필요합니다');
     }
@@ -42,7 +42,7 @@ class ProjectsController {
     res.send(updatedProject);
   }
 
-  async deleteProject(req: AuthenticatedRequest, res: Response) {
+  async deleteProject(req: Request, res: Response) {
     if (!req.user) {
       throw new UnauthorizedError('로그인이 필요합니다');
     }
