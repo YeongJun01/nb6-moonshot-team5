@@ -97,7 +97,7 @@ class AuthController {
 
     // 쿠키도 써보고 쿼리도 해봤는데 구글 로그인 이후 화면으로 연결이 안되네요..
     //  redirect
-    res.redirect(`${process.env.FRONTEND_URL}/projects?accessToken=${accessToken}`); //유저 api 만든 뒤 수정
+    res.redirect(`${process.env.FRONTEND_URL}/projects`); //유저 api 만든 뒤 수정
   }
   //로그아웃
   async logout(req: Request, res: Response) {

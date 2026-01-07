@@ -11,6 +11,7 @@ import invitationRouter from './router/invitation-router';
 import attachmentRouter from './router/attachment-router';
 import path from 'node:path';
 import userRouter from './router/user-router';
+import taskRouter from './router/task-router';
 
 //express app 생성
 const app = express();
@@ -53,6 +54,9 @@ app.use('/projects', projectRouter);
 app.use('/projects', memberRouter);
 //invitations
 app.use('/invitations', invitationRouter);
+
+//task
+app.use('/tasks', taskRouter);
 
 //404 처리 미들웨어 및 에러 핸들러 등록
 app.use(defaultNotFoundHandler);

@@ -3,13 +3,14 @@ import projectsController from '../controller/project-controller';
 import { authenticateAccess } from '../middleware/authenticate';
 import { asyncHandler } from '../middleware/handlerFn';
 import { requireProjectMember, requireProjectRole } from '../middleware/requireProjectMember';
+import taskController from '../controller/task-controller';
 
 const projectRouter = express.Router();
 
 projectRouter
   .post('/', authenticateAccess, asyncHandler(projectsController.createProject))
   .get(
-    '/:id',
+    '/:projectId',
     authenticateAccess,
     requireProjectMember,
     asyncHandler(projectsController.getProject),
@@ -27,6 +28,18 @@ projectRouter
     requireProjectMember,
     requireProjectRole('OWNER'),
     asyncHandler(projectsController.deleteProject),
+  )
+  .get(
+    '/:id/tasks',
+    authenticateAccess,
+    requireProjectMember,
+    asyncHandler(taskController.getTasks),
+  )
+  .post(
+    '/:id/tasks',
+    authenticateAccess,
+    requireProjectMember,
+    asyncHandler(taskController.createTask),
   );
 
 export default projectRouter;

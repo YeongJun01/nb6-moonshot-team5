@@ -1,0 +1,42 @@
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3Njc3Nzk3MDIsImV4cCI6MTc2Nzc4MzMwMn0.NibmFJqwU_gryjWzmnggSczWFprBgqc6ay3FoeBkVvM
+
+GET http://localhost:3000/projects/8/tasks
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+###
+POST http://localhost:3000/projects/8/tasks
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    	"title": "string",
+	"startYear": 2025,
+	"startMonth": 1,
+	"startDay": 7,
+	"endYear": 2025,
+	"endMonth": 1,
+	"endDay": 10,
+	"status": "TODO",
+	"tags": [],
+	"attachments":[]
+}
+
+###
+GET http://localhost:3000/tasks/1
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+###
+PATCH http://localhost:3000/tasks/3
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+ "description":"할 일 수정입니다."
+}
+
+###
+DELETE http://localhost:3000/tasks/3
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}

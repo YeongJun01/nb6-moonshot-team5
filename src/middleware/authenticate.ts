@@ -20,6 +20,8 @@ export async function authenticateAccess(req: AuthenticatedRequest, res: Respons
   } else if (accessTokenFromQuery) {
     token = accessTokenFromQuery;
   }
+  console.log('Extracted Token:', token);
+
   // 토큰이 없으면 401 Unauthorized 응답
   if (!token) {
     throw new UnauthorizedError('토큰이 제공되지 않았습니다.1');
