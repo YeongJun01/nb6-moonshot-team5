@@ -74,6 +74,73 @@ class AuthRepository {
       },
     });
   }
+
+  async upsertGoogleUser(
+    googleUser: {
+      id: string;
+      email: string;
+      name: string;
+      picture?: string;
+    },
+    accessToken: string,
+    refreshToken: string,
+    tokenExpiry: Date,
+  ) {
+    // 기존에 OAuth 정보가 있는지 확인
+    const oauth = await prisma.userOauth.findUnique({
+      where: {
+        provider_providerId: {
+          provider: 'google',
+          providerId: googleUser.id,
+        },
+      },
+      include: { user: true },
+    });
+
+    // 처음 로그인한 경우
+    if (!oauth) {
+      return prisma.user.create({
+        data: {
+          email: googleUser.email,
+          name: googleUser.name,
+          profileImage: googleUser.picture,
+          userOauths: {
+            create: {
+              provider: 'google',
+              providerId: googleUser.id,
+              accessToken,
+              refreshToken,
+              tokenExpiry,
+            },
+          },
+        },
+        include: { userOauths: true },
+      });
+    }
+
+    // 기존에 OAuth 정보가 있는 경우 토큰 업데이트
+    await prisma.userOauth.update({
+      where: { id: oauth.id },
+      data: {
+        accessToken,
+        refreshToken,
+        tokenExpiry,
+      },
+    });
+    return oauth.user;
+  }
+
+  async findUserOauth(provider: string, providerId: string) {
+    return prisma.userOauth.findUnique({
+      where: {
+        provider_providerId: {
+          provider,
+          providerId,
+        },
+      },
+      include: { user: true },
+    });
+  }
 }
 
 export default new AuthRepository();

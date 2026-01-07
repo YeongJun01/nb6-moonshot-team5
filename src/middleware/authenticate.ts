@@ -8,19 +8,30 @@ import UnauthorizedError from '../lib/errors/UnauthorizedError';
 export async function authenticateAccess(req: AuthenticatedRequest, res: Response, next: Function) {
   // 쿠키가 아닌 authorization 헤더에서 토큰 추출
   const authHeader = req.headers.authorization;
+  const accessTokenFromCookie = req.cookies?.accessToken;
+  const accessTokenFromQuery = req.query.accessToken as string | undefined;
 
+  let token;
+
+  if (authHeader?.startsWith('Bearer ')) {
+    token = authHeader.split(' ')[1];
+  } else if (accessTokenFromCookie) {
+    token = accessTokenFromCookie;
+  } else if (accessTokenFromQuery) {
+    token = accessTokenFromQuery;
+  }
   // 토큰이 없으면 401 Unauthorized 응답
-  if (!authHeader) {
-    throw new UnauthorizedError('토큰이 제공되지 않았습니다.');
+  if (!token) {
+    throw new UnauthorizedError('토큰이 제공되지 않았습니다.1');
   }
 
-  // Bearer의 타입과 토큰 분리
-  const [type, token] = authHeader.split(' ');
+  // // Bearer의 타입과 토큰 분리
+  // const [type, token] = authHeader.split(' ');
 
-  // 타입이 Bearer가 아니거나 토큰이 없으면
-  if (type !== 'Bearer' || !token) {
-    throw new UnauthorizedError('유효하지 않은 토큰 형식입니다.');
-  }
+  // // 타입이 Bearer가 아니거나 토큰이 없으면
+  // if (type !== 'Bearer' || !token) {
+  //   throw new UnauthorizedError('유효하지 않은 토큰 형식입니다.');
+  // }
 
   try {
     // 토큰 검증
@@ -68,7 +79,7 @@ export async function authenticateRefresh(
   const authoHeader = req.headers.authorization;
 
   if (!authoHeader) {
-    throw new UnauthorizedError('토큰이 제공되지 않았습니다.');
+    throw new UnauthorizedError('토큰이 제공되지 않았습니다.2');
   }
 
   const [type, token] = authoHeader.split(' ');
