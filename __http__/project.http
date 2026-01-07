@@ -1,4 +1,4 @@
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3Njc2NjE0NjIsImV4cCI6MTc2NzY2NTA2Mn0.j-nnPZP414RyHw-XB_LjOGDDqdDL5vfj6NLa-rfpsJg
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjExLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzY3NjgzMjM2LCJleHAiOjE3Njc2ODY4MzZ9.MbdR0gQ3d5r9niz4ZNGXMnAK60v7ywBkNpVOX3xxoTc
 ###프로젝트 생성
 POST http://localhost:3000/projects
 Content-Type: application/json
@@ -10,11 +10,11 @@ Authorization: Bearer {{accessToken}}
 }
 
 ###프로젝트 조회
-GET http://localhost:3000/projects/18
+GET http://localhost:3000/projects/19
 Authorization: Bearer {{accessToken}}
 
 ###프로젝트 수정
-PATCH http://localhost:3000/projects/16
+PATCH http://localhost:3000/projects/19
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
@@ -24,5 +24,5 @@ Authorization: Bearer {{accessToken}}
 }
 
 ###프로젝트 삭제
-DELETE http://localhost:3000/projects/18
+DELETE http://localhost:3000/projects/19
 Authorization: Bearer {{accessToken}}

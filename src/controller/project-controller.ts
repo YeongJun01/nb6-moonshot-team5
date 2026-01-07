@@ -3,7 +3,6 @@ import { create } from 'superstruct';
 import { CreateProjectStruct, UpdateProjectStruct } from '../structs/project-structs';
 import { IdParamsStruct } from '../structs/common-structs';
 import projectService from '../service/project-service';
-import type { AuthenticatedRequest } from '../types/auth';
 import UnauthorizedError from '../lib/errors/UnauthorizedError';
 
 class ProjectsController {

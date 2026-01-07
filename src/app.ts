@@ -7,6 +7,7 @@ import authRouter from './router/auth-router';
 import projectRouter from './router/project-router';
 import memberRouter from './router/member-router';
 import invitationRouter from './router/invitation-router';
+import subtaskRouter from './router/subtask-router';
 
 //express app 생성
 const app = express();
@@ -31,6 +32,8 @@ app.use('/projects', projectRouter);
 app.use('/projects', memberRouter);
 //invitations
 app.use('/invitations', invitationRouter);
+
+app.use('/subtasks', subtaskRouter);
 
 //404 처리 미들웨어 및 에러 핸들러 등록
 app.use(defaultNotFoundHandler);

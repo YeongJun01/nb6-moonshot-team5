@@ -1,0 +1,17 @@
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3Njc3NTI4MjIsImV4cCI6MTc2Nzc1NjQyMn0.G2LLtaqOoiDWrtnqHu-pzkvnSXazZ5C5s_3mbcqG7mg
+GET http://localhost:3000/subtasks/1
+Authorization: Bearer {{accessToken}}
+
+###
+PATCH http://localhost:3000/subtasks/1
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "title" : "ERD 작성 수정"
+}
+
+
+###
+DELETE http://localhost:3000/subtasks/3
+Authorization: Bearer {{accessToken}}
