@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import { PORT } from './lib/constants';
 import { defaultNotFoundHandler, errorHandler } from './middleware/errorHandler';
 import authRouter from './router/auth-router';
@@ -15,10 +16,17 @@ import userRouter from './router/user-router';
 const app = express();
 
 //CORS 설정
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  }),
+);
 
 //JSON 파싱 미들웨어 설정
 app.use(express.json());
+//쿠키 파서 미들웨어 설정
+app.use(cookieParser());
 
 //파일 업로드를 위한 정적 파일 서비스 설정
 app.use('/attachments', express.static(path.join(__dirname, '../public/attachments')));

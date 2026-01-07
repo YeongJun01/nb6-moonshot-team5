@@ -70,10 +70,34 @@ class AuthController {
       throw new UnauthorizedError('Google 인증 실패');
     }
 
+    console.log('Authorization Code:', code);
     const { accessToken, refreshToken } = await authService.handleGoogleCallback(code);
 
+    console.log('accessToken:', accessToken);
+    console.log('refreshToken:', refreshToken);
+
+    const isProd = process.env.NODE_ENV === 'production';
+
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
+      path: '/',
+      maxAge: 1000 * 60 * 60, // 1시간
+    });
+
+    // refresh token
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
+      path: '/',
+      maxAge: 1000 * 60 * 60 * 24 * 14, // 14일
+    });
+
+    // 쿠키도 써보고 쿼리도 해봤는데 구글 로그인 이후 화면으로 연결이 안되네요..
     //  redirect
-    res.redirect(`${process.env.FRONTEND_URL}/`); //유저 api 만든 뒤 수정
+    res.redirect(`${process.env.FRONTEND_URL}/projects?accessToken=${accessToken}`); //유저 api 만든 뒤 수정
   }
   //로그아웃
   async logout(req: Request, res: Response) {
