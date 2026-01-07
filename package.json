@@ -37,17 +37,22 @@
   "dependencies": {
     "@prisma/client": "^5.4.2",
     "@sendgrid/mail": "^8.1.6",
+    "axios": "^1.13.2",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^5.2.1",
+<<<<<<< HEAD
     "express-validator": "^7.3.1",
+=======
+    "google-auth-library": "^10.5.0",
+>>>>>>> upstream/develop
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
     "superstruct": "^1.0.3"
   },
   "prisma": {
-    "seed": "ts-node src/lib/seed.ts"
+    "seed": "node src/lib/seed.ts"
   }
 }

@@ -1,4 +1,5 @@
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjExLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzY3NjgzMjM2LCJleHAiOjE3Njc2ODY4MzZ9.MbdR0gQ3d5r9niz4ZNGXMnAK60v7ywBkNpVOX3xxoTc
+
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3Njc1NzY5MTMsImV4cCI6MTc2NzU4MDUxM30.ycksTurOtoYg7SB9z1NOPD0ALHx3Izau8uhuUZTFx0Q
 ###프로젝트 생성
 POST http://localhost:3000/projects
 Content-Type: application/json
@@ -13,8 +14,17 @@ Authorization: Bearer {{accessToken}}
 GET http://localhost:3000/projects/19
 Authorization: Bearer {{accessToken}}
 
+<<<<<<< HEAD
 ###프로젝트 수정
+<<<<<<< HEAD
 PATCH http://localhost:3000/projects/19
+=======
+PATCH http://localhost:3000/projects/16
+=======
+###
+PATCH http://localhost:3000/projects/4
+>>>>>>> 9775c2f ([생성]유저 기능(수정 예정))
+>>>>>>> upstream/develop
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
