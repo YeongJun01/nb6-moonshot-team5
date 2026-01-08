@@ -45,18 +45,18 @@ class TaskService {
   // 프로젝트 내 할 일 생성
   async createTask(projectId: number, assigneeId: number, input: CreateTaskInput) {
     const project = await projectRepository.findById(projectId);
-    if (!project) {
-      throw new NotFoundError('프로젝트를 찾을 수 없습니다.');
-    }
+    if (!project) throw new NotFoundError('프로젝트를 찾을 수 없습니다.');
 
     const task = await taskRepository.createTask(projectId, assigneeId, input);
 
-    // 2) 캘린더 동기화 (assigneeId 있을 때만)
     if (task.assigneeId) {
-      const eventId = await calendarService.createTaskEvent(task.assigneeId, task);
-      await taskRepository.updateGoogleEventId(task.id, eventId);
-      // task 객체에 반영해서 반환하고 싶으면:
-      return { ...task, googleEventId: eventId };
+      try {
+        const eventId = await calendarService.createTaskEvent(task.assigneeId, task);
+        await taskRepository.updateGoogleEventId(task.id, eventId);
+        return { ...task, googleEventId: eventId };
+      } catch (e) {
+        console.warn('[calendar] create sync skipped:', e);
+      }
     }
 
     return task;
@@ -76,7 +76,6 @@ class TaskService {
 
     const updated = await taskRepository.updateTask(taskId, input);
 
-    // 담당자 없으면 캘린더 동기화 안 함
     if (!updated.assigneeId) return updated;
 
     try {
@@ -85,13 +84,11 @@ class TaskService {
         return updated;
       }
 
-      // 기존에 이벤트가 없었으면 새로 생성
       const eventId = await calendarService.createTaskEvent(updated.assigneeId, updated);
       await taskRepository.updateGoogleEventId(taskId, eventId);
       return { ...updated, googleEventId: eventId };
     } catch (e) {
-      // 연동 안 된 유저면 여기로 옴 (정책 선택)
-      console.error('calendar sync failed', e);
+      console.warn('[calendar] update sync skipped:', e);
       return updated;
     }
   }
@@ -106,7 +103,7 @@ class TaskService {
         await calendarService.deleteTaskEvent(task.assigneeId, task.googleEventId);
       }
     } catch (e) {
-      console.error('calendar delete failed', e);
+      console.warn('[calendar] delete sync skipped:', e);
     }
 
     await taskRepository.deleteTask(taskId);
