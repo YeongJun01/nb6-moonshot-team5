@@ -11,10 +11,15 @@ import invitationRouter from './router/invitation-router';
 import attachmentRouter from './router/attachment-router';
 import path from 'node:path';
 import userRouter from './router/user-router';
+import taskRouter from './router/task-router';
 
 //express app 생성
 const app = express();
+//JSON 파싱 미들웨어 설정
+app.use(express.json());
 
+//쿠키 파서 미들웨어 설정
+app.use(cookieParser());
 //CORS 설정
 app.use(
   cors({
@@ -22,11 +27,6 @@ app.use(
     credentials: true,
   }),
 );
-
-//JSON 파싱 미들웨어 설정
-app.use(express.json());
-//쿠키 파서 미들웨어 설정
-app.use(cookieParser());
 
 //파일 업로드를 위한 정적 파일 서비스 설정
 app.use('/attachments', express.static(path.join(__dirname, '../public/attachments')));
@@ -53,6 +53,9 @@ app.use('/projects', projectRouter);
 app.use('/projects', memberRouter);
 //invitations
 app.use('/invitations', invitationRouter);
+
+//task
+app.use('/tasks', taskRouter);
 
 //404 처리 미들웨어 및 에러 핸들러 등록
 app.use(defaultNotFoundHandler);
