@@ -5,6 +5,7 @@ import BadRequestError from '../lib/errors/BadRequestError';
 import { create } from 'superstruct';
 import { IdParamsStruct } from '../structs/common-structs';
 import NotFoundError from '../lib/errors/NotFoundError';
+import UnauthorizedError from '../lib/errors/UnauthorizedError';
 
 export async function requireProjectMember(req: Request, res: Response, next: NextFunction) {
   if (!req.user) return next(new ForbiddenError('로그인이 필요합니다'));
@@ -85,4 +86,96 @@ export function requireProjectRole(required: 'OWNER' | 'MEMBER') {
 
     return next();
   };
+}
+
+export async function requireTaskProjectMember(req: Request, res: Response, next: NextFunction) {
+  if (!req.user) return next(new ForbiddenError('로그인이 필요합니다'));
+
+  const rawTaskId = req.params.id;
+  if (!rawTaskId) return next(new BadRequestError('task id가 필요합니다'));
+
+  const { id: taskId } = create({ id: rawTaskId }, IdParamsStruct);
+
+  // 1) task가 존재하는지 + projectId 가져오기
+  const task = await prisma.task.findUnique({
+    where: { id: taskId },
+    select: { id: true, projectId: true },
+  });
+  if (!task) return next(new NotFoundError('존재하지 않는 할일입니다.'));
+
+  // 2) 해당 projectId로 멤버인지 확인
+  const member = await prisma.projectMember.findUnique({
+    where: {
+      projectId_userId: {
+        projectId: task.projectId,
+        userId: req.user.id,
+      },
+    },
+    select: { id: true, role: true },
+  });
+
+  if (!member) return next(new ForbiddenError('프로젝트 멤버가 아닙니다.'));
+
+  req.projectMember = member;
+
+  return next();
+}
+
+export async function requireCommentProjectMember(req: Request, res: Response, next: NextFunction) {
+  if (!req.user) return next(new ForbiddenError('로그인이 필요합니다'));
+
+  const rawCommentId = req.params.id;
+  if (!rawCommentId) return next(new BadRequestError('task id가 필요합니다'));
+
+  const { id: commentId } = create({ id: rawCommentId }, IdParamsStruct);
+  const comment = await prisma.comment.findUnique({
+    where: { id: commentId },
+    select: { id: true, taskId: true },
+  });
+  if (!comment) return next(new NotFoundError('존재하지 않는 댓글입니다.'));
+  const taskId = comment.taskId;
+
+  // 1) task가 존재하는지 + projectId 가져오기
+  const task = await prisma.task.findUnique({
+    where: { id: taskId },
+    select: { id: true, projectId: true },
+  });
+  if (!task) return next(new NotFoundError('존재하지 않는 할일입니다.'));
+
+  // 2) 해당 projectId로 멤버인지 확인
+  const member = await prisma.projectMember.findUnique({
+    where: {
+      projectId_userId: {
+        projectId: task.projectId,
+        userId: req.user.id,
+      },
+    },
+    select: { id: true, role: true },
+  });
+
+  if (!member) return next(new ForbiddenError('프로젝트 멤버가 아닙니다.'));
+
+  req.projectMember = member;
+
+  return next();
+}
+
+export async function requireCommentAuthor(req: Request, res: Response, next: NextFunction) {
+  if (!req.user) {
+    return next(new UnauthorizedError('로그인이 필요합니다.'));
+  }
+  const rawCommentId = req.params.id;
+  const { id: commentId } = create({ id: rawCommentId }, IdParamsStruct);
+  const comment = await prisma.comment.findUnique({
+    where: { id: commentId },
+    select: { authorId: true },
+  });
+  if (!comment) {
+    return next(new NotFoundError('존재하지 않는 댓글입니다.'));
+  }
+
+  if (comment.authorId != req.user.id) {
+    return next(new ForbiddenError('작성자가 아닙니다.'));
+  }
+  return next();
 }

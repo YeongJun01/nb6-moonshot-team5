@@ -8,15 +8,13 @@ import authRouter from './router/auth-router';
 import projectRouter from './router/project-router';
 import memberRouter from './router/member-router';
 import invitationRouter from './router/invitation-router';
-
 import subtaskRouter from './router/subtask-router';
-
 import attachmentRouter from './router/attachment-router';
 import path from 'node:path';
 import userRouter from './router/user-router';
-
+import commentTaskRouter from './router/comment-task-router';
 import taskRouter from './router/task-router';
-
+import commentRouter from './router/comment-router';
 
 //express app 생성
 const app = express();
@@ -58,10 +56,13 @@ app.use('/projects', projectRouter);
 app.use('/projects', memberRouter);
 //invitations
 app.use('/invitations', invitationRouter);
-
+//subtask
 app.use('/subtasks', subtaskRouter);
 //task
 app.use('/tasks', taskRouter);
+//comment
+app.use('/tasks', commentTaskRouter);
+app.use('/comments', commentRouter);
 
 //404 처리 미들웨어 및 에러 핸들러 등록
 app.use(defaultNotFoundHandler);

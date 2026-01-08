@@ -58,7 +58,7 @@ class ProjectRepository {
   }
 
   async deleteProject(userId: number, projectId: number) {
-    await this.checkOwner(userId, projectId); // ✅ await 빠져있던 부분 수정
+    await this.checkOwner(userId, projectId);
 
     return prisma.project.delete({
       where: { id: projectId },

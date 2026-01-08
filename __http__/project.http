@@ -1,5 +1,5 @@
 @url = http://localhost:3001
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2LCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzY3ODM0ODk0LCJleHAiOjE3Njc4Mzg0OTR9.x5xnFC2up6JGBXeh7R115aKQ_KRy9hipFmR9bkLdA28
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2LCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzY3ODUzODk5LCJleHAiOjE3Njc4NTc0OTl9._hh8OsfPdJEE6J6oSug1clCJv6ybrwIs9s24VdT-Czs
 ###프로젝트 생성
 POST {{url}}/projects
 Content-Type: application/json
@@ -11,7 +11,7 @@ Authorization: Bearer {{accessToken}}
 }
 
 ###프로젝트 조회
-GET {{url}}/projects/19
+GET {{url}}/projects/22
 Authorization: Bearer {{accessToken}}
 
 

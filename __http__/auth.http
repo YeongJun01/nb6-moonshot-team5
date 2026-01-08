@@ -1,4 +1,4 @@
-POST http://localhost:3000/auth/register
+POST http://localhost:3001/auth/register
 Content-Type: application/json
 
 {
@@ -9,7 +9,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:3000/auth/login
+POST http://localhost:3001/auth/login
 Content-Type: application/json
 
 {
@@ -19,7 +19,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:3000/auth/login
+POST http://localhost:3001/auth/login
 Content-Type: application/json
 
 {
@@ -30,6 +30,6 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:3000/auth/refresh
+POST http://localhost:3001/auth/refresh
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNzY3MzE4NjQ2LCJleHAiOjE3Njc5MjM0NDZ9.ZYqTnmYC9qXF4EwnAyUwLW8wNITe5JI34fidd9dn_cM
