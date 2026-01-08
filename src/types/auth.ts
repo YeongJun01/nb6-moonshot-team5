@@ -11,3 +11,11 @@ export interface AuthenticatedRequest extends Request {
   };
   refreshToken?: string;
 }
+interface UpdateSubtaskInput {
+  title?: string;
+  status?: 'TODO' | 'DONE';
+}
+
+export interface AuthRequest extends Request {
+  userId?: number;
+}

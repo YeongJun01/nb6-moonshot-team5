@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "name": "testuser5",
-    "email": "pkeonyz@gmail.com",
+    "email": "pkeonyz1@gmail.com",
     "password": "testpassword"
 }
 
@@ -23,8 +23,8 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-    "email": "pkeonyz@gmail.com",
-    "password": "testpassword"
+    "email": "pky900823@gmail.com",
+    "password": "password"
 }
 
 

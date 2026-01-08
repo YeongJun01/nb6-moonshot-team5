@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3Njc2NjE0NjIsImV4cCI6MTc2NzY2NTA2Mn0.j-nnPZP414RyHw-XB_LjOGDDqdDL5vfj6NLa-rfpsJg
+@url = http://localhost:3001
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2LCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzY3ODM0ODk0LCJleHAiOjE3Njc4Mzg0OTR9.x5xnFC2up6JGBXeh7R115aKQ_KRy9hipFmR9bkLdA28
 ###프로젝트 생성
-=======
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3Njc1NzY5MTMsImV4cCI6MTc2NzU4MDUxM30.ycksTurOtoYg7SB9z1NOPD0ALHx3Izau8uhuUZTFx0Q
->>>>>>> 9775c2f ([생성]유저 기능(수정 예정))
-POST http://localhost:3000/projects
+POST {{url}}/projects
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
@@ -14,16 +11,13 @@ Authorization: Bearer {{accessToken}}
 }
 
 ###프로젝트 조회
-GET http://localhost:3000/projects/18
+GET {{url}}/projects/19
 Authorization: Bearer {{accessToken}}
 
-<<<<<<< HEAD
+
 ###프로젝트 수정
-PATCH http://localhost:3000/projects/16
-=======
-###
-PATCH http://localhost:3000/projects/4
->>>>>>> 9775c2f ([생성]유저 기능(수정 예정))
+
+PATCH {{url}}/projects/4
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
@@ -33,5 +27,5 @@ Authorization: Bearer {{accessToken}}
 }
 
 ###프로젝트 삭제
-DELETE http://localhost:3000/projects/18
+DELETE {{url}}/projects/19
 Authorization: Bearer {{accessToken}}

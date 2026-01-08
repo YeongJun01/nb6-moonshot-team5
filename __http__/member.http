@@ -1,18 +1,18 @@
 @accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjExLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzY3NjgzMjM2LCJleHAiOjE3Njc2ODY4MzZ9.MbdR0gQ3d5r9niz4ZNGXMnAK60v7ywBkNpVOX3xxoTc
 ###프로젝트 멤버 조회
-GET http://localhost:3000/projects/16/users
+GET http://localhost:3001/projects/16/users
 Authorization: Bearer {{accessToken}}
 
 ###프로젝트 멤버 조회(쿼리)
-GET http://localhost:3000/projects/16/users?page=1&limit=3
+GET http://localhost:3001/projects/16/users?page=1&limit=3
 Authorization: Bearer {{accessToken}}
 
 ###프로젝트에서 유저 제외하기
-DELETE http://localhost:3000/projects/16/users/11
+DELETE http://localhost:3001/projects/16/users/11
 Authorization: Bearer {{accessToken}}
 
 ###프로젝트에 멤버 초대
-POST http://localhost:3000/projects/16/invitations
+POST http://localhost:3001/projects/16/invitations
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
@@ -21,9 +21,9 @@ Authorization: Bearer {{accessToken}}
 }
 
 ###멤버 초대 수락
-POST http://localhost:3000/invitations/12/accept
+POST http://localhost:3001/invitations/12/accept
 Authorization: Bearer {{accessToken}}
 
 ###멤버 초대 삭제
-DELETE http://localhost:3000/invitations/8
+DELETE http://localhost:3001/invitations/8
 Authorization: Bearer {{accessToken}}
