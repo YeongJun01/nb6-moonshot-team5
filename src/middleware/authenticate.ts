@@ -8,19 +8,12 @@ import UnauthorizedError from '../lib/errors/UnauthorizedError';
 export async function authenticateAccess(req: AuthenticatedRequest, res: Response, next: Function) {
   // 쿠키가 아닌 authorization 헤더에서 토큰 추출
   const authHeader = req.headers.authorization;
-  const accessTokenFromCookie = req.cookies?.accessToken;
-  const accessTokenFromQuery = req.query.accessToken as string | undefined;
 
   let token;
 
   if (authHeader?.startsWith('Bearer ')) {
     token = authHeader.split(' ')[1];
-  } else if (accessTokenFromCookie) {
-    token = accessTokenFromCookie;
-  } else if (accessTokenFromQuery) {
-    token = accessTokenFromQuery;
   }
-  console.log('Extracted Token:', token);
 
   // 토큰이 없으면 401 Unauthorized 응답
   if (!token) {

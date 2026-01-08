@@ -15,7 +15,11 @@ import taskRouter from './router/task-router';
 
 //express app 생성
 const app = express();
+//JSON 파싱 미들웨어 설정
+app.use(express.json());
 
+//쿠키 파서 미들웨어 설정
+app.use(cookieParser());
 //CORS 설정
 app.use(
   cors({
@@ -23,11 +27,6 @@ app.use(
     credentials: true,
   }),
 );
-
-//JSON 파싱 미들웨어 설정
-app.use(express.json());
-//쿠키 파서 미들웨어 설정
-app.use(cookieParser());
 
 //파일 업로드를 위한 정적 파일 서비스 설정
 app.use('/attachments', express.static(path.join(__dirname, '../public/attachments')));

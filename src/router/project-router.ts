@@ -10,7 +10,7 @@ const projectRouter = express.Router();
 projectRouter
   .post('/', authenticateAccess, asyncHandler(projectsController.createProject))
   .get(
-    '/:projectId',
+    '/:id',
     authenticateAccess,
     requireProjectMember,
     asyncHandler(projectsController.getProject),
