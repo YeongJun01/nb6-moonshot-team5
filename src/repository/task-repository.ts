@@ -89,6 +89,8 @@ class TaskRepository {
   }
 
   async createTask(projectId: number, assigneeId: number, input: CreateTaskInput) {
+    const tagNames = Array.from(new Set((input.tags ?? []).map((t) => t.trim()).filter(Boolean)));
+
     return prisma.task.create({
       data: {
         title: input.title,
@@ -102,11 +104,28 @@ class TaskRepository {
         endDay: input.endDay,
         status: input.status ?? TaskStatus.todo,
         assigneeId,
+
+        taskTags: tagNames.length
+          ? {
+              create: tagNames.map((name) => ({
+                tag: {
+                  connectOrCreate: {
+                    where: { name },
+                    create: { name },
+                  },
+                },
+              })),
+            }
+          : undefined,
+      },
+      include: {
+        taskTags: { include: { tag: true } },
       },
     });
   }
 
   async updateTask(taskId: number, input: UpdateTaskInput, taskTags?: { tagId: number }[]) {
+    const tagNames = Array.from(new Set((input.tags ?? []).map((t) => t.trim()).filter(Boolean)));
     return prisma.task.update({
       where: { id: taskId },
       data: {
@@ -120,10 +139,24 @@ class TaskRepository {
         endDay: input.endDay,
         status: input.status,
 
-        ...(taskTags && {
+        //   ...(taskTags && {
+        //     taskTags: {
+        //       deleteMany: {}, // 기존 전부 삭제
+        //       create: taskTags,
+        //     },
+        //   }),
+        // },
+        ...(input.tags && {
           taskTags: {
-            deleteMany: {}, // 기존 전부 삭제
-            create: taskTags,
+            deleteMany: {},
+            create: tagNames.map((name) => ({
+              tag: {
+                connectOrCreate: {
+                  where: { name },
+                  create: { name },
+                },
+              },
+            })),
           },
         }),
       },

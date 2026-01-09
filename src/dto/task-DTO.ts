@@ -35,7 +35,7 @@ export type CreateTaskInput = {
   endMonth: number;
   endDay: number;
   status?: TaskStatus;
-  tags?: [];
+  tags?: string[];
   attachment?: [];
 };
 
@@ -51,7 +51,7 @@ export interface UpdateTaskInput {
   endYear?: number;
   endMonth?: number;
   endDay?: number;
-  tags?: [];
+  tags?: string[];
   attachment?: [];
 }
 
