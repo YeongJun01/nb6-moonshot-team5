@@ -89,6 +89,8 @@ class TaskRepository {
   }
 
   async createTask(projectId: number, assigneeId: number, input: CreateTaskInput) {
+    const tagNames = (input.tags ?? []).map((t) => t.trim()).filter(Boolean);
+
     return prisma.task.create({
       data: {
         title: input.title,
@@ -102,6 +104,22 @@ class TaskRepository {
         endDay: input.endDay,
         status: input.status ?? TaskStatus.todo,
         assigneeId,
+
+        taskTags: tagNames.length
+          ? {
+              create: tagNames.map((name) => ({
+                tag: {
+                  connectOrCreate: {
+                    where: { name },
+                    create: { name },
+                  },
+                },
+              })),
+            }
+          : undefined,
+      },
+      include: {
+        taskTags: { include: { tag: true } },
       },
     });
   }
