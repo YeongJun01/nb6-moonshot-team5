@@ -1,4 +1,28 @@
 import { TaskStatus } from '@prisma/client';
+import { Prisma } from '@prisma/client';
+
+export type TaskWithRelations = Prisma.TaskGetPayload<{
+  include: {
+    user: {
+      select: {
+        id: true;
+        name: true;
+        email: true;
+        profileImage: true;
+      };
+    };
+    taskTags: {
+      include: {
+        tag: true;
+      };
+    };
+    attachments: {
+      select: {
+        url: true;
+      };
+    };
+  };
+}>;
 
 export type CreateTaskInput = {
   title: string;
@@ -11,6 +35,8 @@ export type CreateTaskInput = {
   endMonth: number;
   endDay: number;
   status?: TaskStatus;
+  tags?: [];
+  attachment?: [];
 };
 
 export interface UpdateTaskInput {
@@ -25,6 +51,8 @@ export interface UpdateTaskInput {
   endYear?: number;
   endMonth?: number;
   endDay?: number;
+  tags?: [];
+  attachment?: [];
 }
 
 export interface FindProjectTasksQuery {
@@ -59,3 +87,27 @@ export interface TaskResponse {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export const TASK_INCLUDE = {
+  user: {
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      profileImage: true,
+    },
+  },
+  taskTags: {
+    include: {
+      tag: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+  },
+  attachments: {
+    select: { url: true },
+  },
+};
