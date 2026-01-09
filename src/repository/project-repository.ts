@@ -10,7 +10,7 @@ class ProjectRepository {
         projectMembers: {
           create: {
             userId,
-            role: 'OWNER',
+            role: 'owner',
           },
         },
       },
@@ -27,9 +27,9 @@ class ProjectRepository {
     return {
       project,
       memberCount,
-      todoCount: counts.TODO,
-      inProgressCount: counts.IN_PROGRESS,
-      doneCount: counts.DONE,
+      todoCount: counts.todo,
+      inProgressCount: counts.in_progress,
+      doneCount: counts.done,
     };
   }
 
@@ -51,9 +51,9 @@ class ProjectRepository {
     return {
       updatedProject,
       memberCount,
-      todoCount: counts.TODO,
-      inProgressCount: counts.IN_PROGRESS,
-      doneCount: counts.DONE,
+      todoCount: counts.todo,
+      inProgressCount: counts.in_progress,
+      doneCount: counts.done,
     };
   }
 
@@ -77,9 +77,9 @@ class ProjectRepository {
     });
 
     const counts: Record<TaskStatus, number> = {
-      TODO: 0,
-      IN_PROGRESS: 0,
-      DONE: 0,
+      todo: 0,
+      in_progress: 0,
+      done: 0,
     };
 
     for (const state of grouped) {
@@ -91,7 +91,7 @@ class ProjectRepository {
 
   private async checkOwner(userId: number, projectId: number): Promise<void> {
     const owner = await prisma.projectMember.findFirst({
-      where: { projectId, role: 'OWNER' },
+      where: { projectId, role: 'owner' },
     });
 
     if (!owner || owner.userId !== userId) {

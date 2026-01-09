@@ -59,7 +59,7 @@ class MembersRepository {
         email: m.user.email,
         profileImage: m.user.profileImage,
         taskCount: m.user._count.tasks,
-        status: invitationInfo?.status ?? 'ACCEPTED',
+        status: invitationInfo?.status ?? 'accepted',
         invitationId: invitationInfo?.id ?? null,
       };
     });
@@ -105,8 +105,8 @@ class MembersRepository {
     //기존에 보낸 초대있을 수 있으니 upsert(create + update)
     return prisma.invitation.upsert({
       where: { projectId_invitedEmail: { projectId, invitedEmail: email } },
-      update: { status: 'PENDING' },
-      create: { projectId, invitedEmail: email, status: 'PENDING' },
+      update: { status: 'pending' },
+      create: { projectId, invitedEmail: email, status: 'pending' },
     });
   }
 
@@ -126,7 +126,7 @@ class MembersRepository {
       data: {
         projectId,
         userId,
-        role: 'MEMBER',
+        role: 'member',
       },
     });
   }

@@ -4,6 +4,6 @@ export type MemberListDTO = {
   email: string;
   profileImage: string | null;
   taskCount: number;
-  status: 'PENDING' | 'ACCEPTED' | 'REJECTED';
+  status: 'pending' | 'accepted' | 'rejected';
   invitationId: number | null;
 };

@@ -82,13 +82,13 @@ class MembersService {
       }
 
       //이미 처리된 초대인지
-      if (invitation.status !== InvitationStatus.PENDING) {
+      if (invitation.status !== InvitationStatus.pending) {
         throw new ConflictError('이미 처리된 초대입니다.');
       }
 
       const newMember = await memberRepository.createProjectMember(invitation.projectId, userId);
 
-      await invitationRepository.updateStatus(invId, InvitationStatus.ACCEPTED);
+      await invitationRepository.updateStatus(invId, InvitationStatus.accepted);
 
       return newMember;
     });

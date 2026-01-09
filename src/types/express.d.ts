@@ -10,7 +10,7 @@ declare global {
       user?: User;
       projectMember?: {
         id: number;
-        role: 'OWNER' | 'MEMBER';
+        role: 'owner' | 'member';
       };
     }
   }

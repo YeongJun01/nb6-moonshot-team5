@@ -7,13 +7,13 @@ export interface AuthenticatedRequest extends Request {
   };
   projectMember?: {
     id: number;
-    role: 'OWNER' | 'MEMBER';
+    role: 'owner' | 'member';
   };
   refreshToken?: string;
 }
 interface UpdateSubtaskInput {
   title?: string;
-  status?: 'TODO' | 'DONE';
+  status?: 'todo' | 'done';
 }
 
 export interface AuthRequest extends Request {

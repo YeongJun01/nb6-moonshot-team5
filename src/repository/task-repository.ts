@@ -100,7 +100,7 @@ class TaskRepository {
         endYear: input.endYear,
         endMonth: input.endMonth,
         endDay: input.endDay,
-        status: input.status ?? TaskStatus.TODO,
+        status: input.status ?? TaskStatus.todo,
         assigneeId,
       },
     });

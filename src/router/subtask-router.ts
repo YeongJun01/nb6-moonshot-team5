@@ -22,7 +22,7 @@ subtaskRouter
       body('title').optional().notEmpty().withMessage('제목을 입력해주세요'),
       body('status')
         .optional()
-        .isIn(['TODO', 'DONE'])
+        .isIn(['todo', 'done'])
         .withMessage('상태는 TODO 또는 DONE이어야 합니다'),
       validate,
     ],
