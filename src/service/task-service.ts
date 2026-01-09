@@ -54,19 +54,39 @@ class TaskService {
     const project = await projectRepository.findById(projectId);
     if (!project) throw new NotFoundError('프로젝트를 찾을 수 없습니다.');
 
-    const task = await taskRepository.createTask(projectId, assigneeId, input);
+    const created = await taskRepository.createTask(projectId, assigneeId, input);
 
-    if (task.assigneeId) {
+    if (created.assigneeId) {
       try {
-        const eventId = await calendarService.createTaskEvent(task.assigneeId, task);
-        await taskRepository.updateGoogleEventId(task.id, eventId);
-        return { ...task, googleEventId: eventId };
+        const eventId = await calendarService.createTaskEvent(created.assigneeId, created);
+        await taskRepository.updateGoogleEventId(created.id, eventId);
+        return { ...created, googleEventId: eventId };
       } catch (e) {
         console.warn('[calendar] create sync skipped:', e);
       }
     }
 
-    return task;
+    return {
+      id: created.id,
+      projectId: created.projectId,
+      title: created.title,
+      description: created.description,
+      startYear: created.startYear,
+      startMonth: created.startMonth,
+      startDay: created.startDay,
+      endYear: created.endYear,
+      endMonth: created.endMonth,
+      endDay: created.endDay,
+      status: created.status,
+
+      tags: created.taskTags.map((tt) => ({
+        id: tt.tag.id,
+        name: tt.tag.name,
+      })),
+
+      createdAt: created.createdAt,
+      updatedAt: created.updatedAt,
+    };
   }
 
   //할 일 조회
