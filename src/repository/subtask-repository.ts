@@ -1,6 +1,6 @@
 import prisma from '../lib/prisma';
 
-export type SubtaskStatus = 'TODO' | 'DONE';
+export type SubtaskStatus = 'todo' | 'done';
 
 export interface CreateSubtaskData {
   title: string;

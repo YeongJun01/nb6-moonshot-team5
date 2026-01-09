@@ -36,9 +36,9 @@ class UserService {
     const data = projects.map((p) => ({
       ...p,
       memberCount: memberCounts[p.id] ?? 0,
-      todoCount: taskCounts[p.id]?.TODO ?? 0,
-      inProgressCount: taskCounts[p.id]?.IN_PROGRESS ?? 0,
-      doneCount: taskCounts[p.id]?.DONE ?? 0,
+      todoCount: taskCounts[p.id]?.todo ?? 0,
+      inProgressCount: taskCounts[p.id]?.in_progress ?? 0,
+      doneCount: taskCounts[p.id]?.done ?? 0,
     }));
 
     return {

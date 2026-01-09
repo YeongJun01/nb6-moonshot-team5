@@ -62,7 +62,7 @@ export async function requireInvitationAccess(req: Request, res: Response, next:
   const owner = await prisma.projectMember.findFirst({
     where: {
       projectId: invitation.projectId,
-      role: 'OWNER',
+      role: 'owner',
     },
     select: { userId: true },
   });
@@ -76,11 +76,11 @@ export async function requireInvitationAccess(req: Request, res: Response, next:
   next();
 }
 
-export function requireProjectRole(required: 'OWNER' | 'MEMBER') {
+export function requireProjectRole(required: 'owner' | 'member') {
   return async (req: Request, res: Response, next: NextFunction) => {
     if (!req.projectMember) return next(new ForbiddenError('프로젝트 멤버가 아닙니다'));
 
-    if (required === 'OWNER' && req.projectMember.role != 'OWNER') {
+    if (required === 'owner' && req.projectMember.role != 'owner') {
       return next(new ForbiddenError('프로젝트 관리자가 아닙니다'));
     }
 

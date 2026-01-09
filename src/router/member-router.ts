@@ -17,14 +17,14 @@ memberRouter
     '/:id/users/:userId',
     authenticateAccess,
     requireProjectMember,
-    requireProjectRole('OWNER'),
+    requireProjectRole('owner'),
     asyncHandler(memberController.deleteProjectMembers),
   )
   .post(
     '/:id/invitations',
     authenticateAccess,
     requireProjectMember,
-    requireProjectRole('OWNER'),
+    requireProjectRole('owner'),
     asyncHandler(memberController.inviteProjectMember),
   );
 

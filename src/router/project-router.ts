@@ -19,14 +19,14 @@ projectRouter
     '/:id',
     authenticateAccess,
     requireProjectMember,
-    requireProjectRole('OWNER'),
+    requireProjectRole('owner'),
     asyncHandler(projectsController.updateProject),
   )
   .delete(
     '/:id',
     authenticateAccess,
     requireProjectMember,
-    requireProjectRole('OWNER'),
+    requireProjectRole('owner'),
     asyncHandler(projectsController.deleteProject),
   )
   .get(
