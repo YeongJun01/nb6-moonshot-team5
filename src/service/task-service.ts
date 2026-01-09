@@ -1,7 +1,13 @@
 import taskRepository from '../repository/task-repository';
 import NotFoundError from '../lib/errors/NotFoundError';
-import { UpdateTaskInput, CreateTaskInput, FindProjectTasksQuery } from '../dto/task-DTO';
+import {
+  UpdateTaskInput,
+  CreateTaskInput,
+  FindProjectTasksQuery,
+  TaskWithRelations,
+} from '../dto/task-DTO';
 import projectRepository from '../repository/project-repository';
+import tagService from './tag-service';
 import memberRepository from '../repository/member-repository';
 import ForbiddenError from '../lib/errors/ForbiddenError';
 import calendarService from './calendar-service';
@@ -61,13 +67,14 @@ class TaskService {
 
     return task;
   }
+
   //할 일 조회
   async findTaskById(taskId: number) {
     const task = await taskRepository.findById(taskId);
     if (!task) {
       throw new NotFoundError('할 일을 찾을 수 없습니다.');
     }
-    return task;
+    return this.toTaskResponse(task);
   }
   //할 일 수정
   async updateTask(taskId: number, input: UpdateTaskInput) {
@@ -117,6 +124,33 @@ class TaskService {
   //       throw new ForbiddenError('프로젝트는 참여자만 접근할 수 있습니다.');
   //     }
   //   }
+
+  private toTaskResponse(task: TaskWithRelations) {
+    return {
+      id: task.id,
+      projectId: task.projectId,
+      title: task.title,
+      startYear: task.startYear,
+      startMonth: task.startMonth,
+      startDay: task.startDay,
+      endYear: task.endYear,
+      endMonth: task.endMonth,
+      endDay: task.endDay,
+      status: task.status,
+      assignee: task.user
+        ? {
+            id: task.user.id,
+            name: task.user.name,
+            email: task.user.email,
+            profileImage: task.user.profileImage,
+          }
+        : null,
+      tags: task.taskTags.map((tt) => tt.tag),
+      attachments: task.attachments.map((a) => a.url),
+      createdAt: task.createdAt,
+      updatedAt: task.updatedAt,
+    };
+  }
 }
 
 export default new TaskService();

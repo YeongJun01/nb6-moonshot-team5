@@ -1,11 +1,13 @@
 import { TaskStatus } from '@prisma/client';
 import prisma from '../lib/prisma';
 import { CreateTaskInput, FindProjectTasksQuery, UpdateTaskInput } from '../dto/task-DTO';
+import { TASK_INCLUDE } from '../dto/task-DTO';
 
 class TaskRepository {
   async findById(taskId: number) {
     return prisma.task.findUnique({
       where: { id: taskId },
+      include: TASK_INCLUDE,
     });
   }
 
@@ -104,10 +106,28 @@ class TaskRepository {
     });
   }
 
-  async updateTask(taskId: number, data: UpdateTaskInput) {
+  async updateTask(taskId: number, input: UpdateTaskInput, taskTags?: { tagId: number }[]) {
     return prisma.task.update({
       where: { id: taskId },
-      data,
+      data: {
+        title: input.title,
+        description: input.description,
+        startYear: input.startYear,
+        startMonth: input.startMonth,
+        startDay: input.startDay,
+        endYear: input.endYear,
+        endMonth: input.endMonth,
+        endDay: input.endDay,
+        status: input.status,
+
+        ...(taskTags && {
+          taskTags: {
+            deleteMany: {}, // 기존 전부 삭제
+            create: taskTags,
+          },
+        }),
+      },
+      include: TASK_INCLUDE,
     });
   }
 
