@@ -1,11 +1,10 @@
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3Njc3Nzk3MDIsImV4cCI6MTc2Nzc4MzMwMn0.NibmFJqwU_gryjWzmnggSczWFprBgqc6ay3FoeBkVvM
-
-GET http://localhost:3000/projects/8/tasks
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2LCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzY3ODUzODk5LCJleHAiOjE3Njc4NTc0OTl9._hh8OsfPdJEE6J6oSug1clCJv6ybrwIs9s24VdT-Czs
+GET http://localhost:3001/projects/22/tasks
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 ###
-POST http://localhost:3000/projects/8/tasks
+POST http://localhost:3001/projects/22/tasks
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
@@ -23,12 +22,12 @@ Authorization: Bearer {{accessToken}}
 }
 
 ###
-GET http://localhost:3000/tasks/1
+GET http://localhost:3001/tasks/3
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 ###
-PATCH http://localhost:3000/tasks/3
+PATCH http://localhost:3001/tasks/3
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
@@ -37,6 +36,6 @@ Authorization: Bearer {{accessToken}}
 }
 
 ###
-DELETE http://localhost:3000/tasks/3
+DELETE http://localhost:3001/tasks/3
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}

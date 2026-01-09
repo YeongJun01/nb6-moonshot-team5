@@ -1,6 +1,7 @@
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjExLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzY3NjgzMjM2LCJleHAiOjE3Njc2ODY4MzZ9.MbdR0gQ3d5r9niz4ZNGXMnAK60v7ywBkNpVOX3xxoTc
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2LCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzY3ODUzODk5LCJleHAiOjE3Njc4NTc0OTl9._hh8OsfPdJEE6J6oSug1clCJv6ybrwIs9s24VdT-Czs
+###프로젝트 생성
 ###프로젝트 멤버 조회
-GET http://localhost:3001/projects/16/users
+GET http://localhost:3001/projects/22/users
 Authorization: Bearer {{accessToken}}
 
 ###프로젝트 멤버 조회(쿼리)
