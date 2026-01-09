@@ -116,6 +116,13 @@ class TaskRepository {
       where: { id: taskId },
     });
   }
+
+  async updateGoogleEventId(taskId: number, googleEventId: string | null) {
+    return prisma.task.update({
+      where: { id: taskId },
+      data: { googleEventId },
+    });
+  }
 }
 
 export default new TaskRepository();

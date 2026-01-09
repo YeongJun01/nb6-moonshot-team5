@@ -4,6 +4,7 @@ import { UpdateTaskInput, CreateTaskInput, FindProjectTasksQuery } from '../dto/
 import projectRepository from '../repository/project-repository';
 import memberRepository from '../repository/member-repository';
 import ForbiddenError from '../lib/errors/ForbiddenError';
+import calendarService from './calendar-service';
 
 class TaskService {
   // 프로젝트 내 할 일 가져오기
@@ -44,11 +45,21 @@ class TaskService {
   // 프로젝트 내 할 일 생성
   async createTask(projectId: number, assigneeId: number, input: CreateTaskInput) {
     const project = await projectRepository.findById(projectId);
-    if (!project) {
-      throw new NotFoundError('프로젝트를 찾을 수 없습니다.');
+    if (!project) throw new NotFoundError('프로젝트를 찾을 수 없습니다.');
+
+    const task = await taskRepository.createTask(projectId, assigneeId, input);
+
+    if (task.assigneeId) {
+      try {
+        const eventId = await calendarService.createTaskEvent(task.assigneeId, task);
+        await taskRepository.updateGoogleEventId(task.id, eventId);
+        return { ...task, googleEventId: eventId };
+      } catch (e) {
+        console.warn('[calendar] create sync skipped:', e);
+      }
     }
 
-    return taskRepository.createTask(projectId, assigneeId, input);
+    return task;
   }
   //할 일 조회
   async findTaskById(taskId: number) {
@@ -60,19 +71,39 @@ class TaskService {
   }
   //할 일 수정
   async updateTask(taskId: number, input: UpdateTaskInput) {
-    const task = await taskRepository.findById(taskId);
-    if (!task) {
-      throw new NotFoundError('할 일을 찾을 수 없습니다.');
-    }
+    const before = await taskRepository.findById(taskId);
+    if (!before) throw new NotFoundError('할 일을 찾을 수 없습니다.');
 
-    return taskRepository.updateTask(taskId, input);
+    const updated = await taskRepository.updateTask(taskId, input);
+
+    if (!updated.assigneeId) return updated;
+
+    try {
+      if (before.googleEventId) {
+        await calendarService.updateTaskEvent(updated.assigneeId, before.googleEventId, updated);
+        return updated;
+      }
+
+      const eventId = await calendarService.createTaskEvent(updated.assigneeId, updated);
+      await taskRepository.updateGoogleEventId(taskId, eventId);
+      return { ...updated, googleEventId: eventId };
+    } catch (e) {
+      console.warn('[calendar] update sync skipped:', e);
+      return updated;
+    }
   }
 
   //할 일 삭제
   async deleteTask(taskId: number) {
     const task = await taskRepository.findById(taskId);
-    if (!task) {
-      throw new NotFoundError('할 일을 찾을 수 없습니다.');
+    if (!task) throw new NotFoundError('할 일을 찾을 수 없습니다.');
+
+    try {
+      if (task.googleEventId && task.assigneeId) {
+        await calendarService.deleteTaskEvent(task.assigneeId, task.googleEventId);
+      }
+    } catch (e) {
+      console.warn('[calendar] delete sync skipped:', e);
     }
 
     await taskRepository.deleteTask(taskId);

@@ -141,6 +141,19 @@ class AuthRepository {
       include: { user: true },
     });
   }
+
+  async findGoogleOauthByUserId(userId: number) {
+    return prisma.userOauth.findFirst({
+      where: { userId, provider: 'google' },
+    });
+  }
+
+  async updateTokens(id: number, accessToken: string, tokenExpiry: Date) {
+    return prisma.userOauth.update({
+      where: { id },
+      data: { accessToken, tokenExpiry },
+    });
+  }
 }
 
 export default new AuthRepository();

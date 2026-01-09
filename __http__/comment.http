@@ -15,11 +15,11 @@ Authorization: Bearer {{accessToken}}
 
 
 ###
-GET {{url}}/comments/3
+GET {{url}}/comments/4
 Authorization: Bearer {{accessToken}}
 
 ###
-PATCH {{url}}/comments/3
+PATCH {{url}}/comments/4
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
@@ -28,5 +28,5 @@ Authorization: Bearer {{accessToken}}
 }
 
 ###
-DELETE {{url}}/comments/3
+DELETE {{url}}/comments/4
 Authorization: Bearer {{accessToken}}
