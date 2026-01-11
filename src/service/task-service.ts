@@ -7,10 +7,9 @@ import {
   TaskWithRelations,
 } from '../dto/task-DTO';
 import projectRepository from '../repository/project-repository';
-import tagService from './tag-service';
 import memberRepository from '../repository/member-repository';
-import ForbiddenError from '../lib/errors/ForbiddenError';
 import calendarService from './calendar-service';
+import taskAttachmentRepository from '../repository/attachment-repository';
 
 class TaskService {
   // 프로젝트 내 할 일 가져오기
@@ -42,7 +41,7 @@ class TaskService {
           id: tt.tag.id,
           name: tt.tag.name,
         })),
-        attachments: task.attachments.map((a) => a.url),
+        attachments: task.attachments.map((a) => a.url) ?? [],
         createdAt: task.createdAt,
         updatedAt: task.updatedAt,
       })),
@@ -56,6 +55,16 @@ class TaskService {
 
     const created = await taskRepository.createTask(projectId, assigneeId, input);
 
+    // 2️⃣ 첨부파일(URL) 생성
+    if (input.attachments?.length) {
+      await taskAttachmentRepository.createMany(
+        input.attachments.map((url) => ({
+          taskId: created.id,
+          url,
+        })),
+      );
+    }
+
     if (created.assigneeId) {
       try {
         const eventId = await calendarService.createTaskEvent(created.assigneeId, created);
@@ -66,27 +75,33 @@ class TaskService {
       }
     }
 
-    return {
-      id: created.id,
-      projectId: created.projectId,
-      title: created.title,
-      description: created.description,
-      startYear: created.startYear,
-      startMonth: created.startMonth,
-      startDay: created.startDay,
-      endYear: created.endYear,
-      endMonth: created.endMonth,
-      endDay: created.endDay,
-      status: created.status,
+    const taskWithRelations = await taskRepository.findById(created.id);
+    if (!taskWithRelations) {
+      throw new NotFoundError('생성된 할 일을 다시 불러오지 못했습니다.');
+    }
 
-      tags: created.taskTags.map((tt) => ({
-        id: tt.tag.id,
-        name: tt.tag.name,
-      })),
+    return this.toTaskResponse(taskWithRelations);
+    //{
+    //   id: created.id,
+    //   projectId: created.projectId,
+    //   title: created.title,
+    //   description: created.description,
+    //   startYear: created.startYear,
+    //   startMonth: created.startMonth,
+    //   startDay: created.startDay,
+    //   endYear: created.endYear,
+    //   endMonth: created.endMonth,
+    //   endDay: created.endDay,
+    //   status: created.status,
 
-      createdAt: created.createdAt,
-      updatedAt: created.updatedAt,
-    };
+    //   tags: created.taskTags.map((tt) => ({
+    //     id: tt.tag.id,
+    //     name: tt.tag.name,
+    //   })),
+
+    //   createdAt: created.createdAt,
+    //   updatedAt: created.updatedAt,
+    // };
   }
 
   //할 일 조회
@@ -102,7 +117,18 @@ class TaskService {
     const before = await taskRepository.findById(taskId);
     if (!before) throw new NotFoundError('할 일을 찾을 수 없습니다.');
 
+    // Task 기본 정보 업데이트
     const updated = await taskRepository.updateTask(taskId, input);
+
+    //  첨부파일(URL) 처리
+    if (input.attachments?.length) {
+      await taskAttachmentRepository.createMany(
+        input.attachments.map((url) => ({
+          taskId,
+          url,
+        })),
+      );
+    }
 
     if (!updated.assigneeId) return updated;
 
@@ -168,7 +194,7 @@ class TaskService {
           }
         : null,
       tags: task.taskTags.map((tt) => tt.tag),
-      attachments: task.attachments.map((a) => a.url),
+      attachments: task.attachments.map((a) => a.url) ?? [],
       createdAt: task.createdAt,
       updatedAt: task.updatedAt,
     };

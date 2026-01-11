@@ -18,6 +18,9 @@ import commentRouter from './router/comment-router';
 
 //express app 생성
 const app = express();
+
+//첨부파일
+app.use('/files', attachmentRouter);
 //JSON 파싱 미들웨어 설정
 app.use(express.json());
 
@@ -40,9 +43,6 @@ app.get('/', (req, res) => {
 });
 
 //기타 라우트 및 미들웨어 설정
-
-//첨부파일
-app.use('/files', attachmentRouter);
 
 //auth
 app.use('/auth', authRouter);

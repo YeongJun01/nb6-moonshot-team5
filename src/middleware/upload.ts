@@ -68,4 +68,4 @@ export const uploadAttachments = multer({
   storage,
   fileFilter,
   limits,
-}).array('attachments', 5);
+}).array('files', 5);
