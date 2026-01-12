@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 import { create } from 'superstruct';
 import { IdParamsStruct, ProjectUserParamsStruct } from '../structs/common-structs';
 import { getProjectMembersParamsStruct } from '../structs/member-structs';
-import { EmailStruct } from '../structs/authStructs';
+import { EmailStruct } from '../structs/auth-structs';
 import UnauthorizedError from '../lib/errors/UnauthorizedError';
 import memberService from '../service/member-service';
 
