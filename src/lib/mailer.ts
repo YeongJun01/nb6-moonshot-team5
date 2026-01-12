@@ -6,7 +6,7 @@ export async function sendInvitationEmail(to: string, acceptUrl: string, project
   const msg = {
     to,
     from: {
-      email: 'ing08114@gmail.com',
+      email: 'pkeonyz@gmail.com',
       name: 'Team5 Moonshot',
     },
     subject: `${projectName} 프로젝트 초대`,

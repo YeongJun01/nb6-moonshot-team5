@@ -1,10 +1,11 @@
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjcsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3Njc5MjI2MDAsImV4cCI6MTc2NzkyNjIwMH0.Vqwe08BujAVsUUBXMTPiductHeu34Ap3nfLFdXS3eOw
-GET http://localhost:3001/projects/25/tasks
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NjgyMDA2NzYsImV4cCI6MTc2ODIwNDI3Nn0.FdICxWlKdbJDiwO5_GEYq0kbWJ2HiucP9VUep1xOHPY
+###
+GET http://localhost:3001/projects/9/tasks
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 ###
-POST http://localhost:3001/projects/25/tasks
+POST http://localhost:3001/projects/9/tasks
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
@@ -17,10 +18,14 @@ Authorization: Bearer {{accessToken}}
 	"endYear": 2025,
 	"endMonth": 1,
 	"endDay": 10,
-	"status": "TODO",
-	"tags": [],
+	"status": "todo",
+	"tags": ["many","hello"],
 	"attachments":[]
 }
+
+###
+GET http://localhost:3001/projects/9/tasks?order=desc
+Authorization: Bearer {{accessToken}}
 
 ###
 GET http://localhost:3001/tasks/3
@@ -33,7 +38,7 @@ Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
- "description":"할 일 수정입니다."
+ "tags": ["hi","bye"]
 }
 
 ###

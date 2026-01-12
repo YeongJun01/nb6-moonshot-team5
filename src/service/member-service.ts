@@ -7,7 +7,6 @@ import NotFoundError from '../lib/errors/NotFoundError';
 import ForbiddenError from '../lib/errors/ForbiddenError';
 import ConflictError from '../lib/errors/ConflictError';
 import { sendInvitationEmail } from '../lib/mailer';
-import { send } from 'node:process';
 import prisma from '../lib/prisma';
 import { InvitationStatus } from '@prisma/client';
 import { buildInvitationAcceptUrl } from '../lib/url';
@@ -28,7 +27,7 @@ class MembersService {
       throw new NotFoundError('프로젝트가 없습니다.');
     }
 
-    if (!(await memberRepository.isProjectMember(projectId, userId))) {
+    if (!(await memberRepository.isAcceptedMember(projectId, userId))) {
       throw new ForbiddenError('프로젝트 멤버가 아닙니다');
     }
 
@@ -49,11 +48,11 @@ class MembersService {
     }
 
     //이미 초대된 멤버인지
-    if (await memberRepository.isProjectMember(id, userId)) {
+    if (await memberRepository.isAcceptedMember(id, userId)) {
       throw new ConflictError('이미 프로젝트의 멤버입니다.');
     }
 
-    const invitation = await memberRepository.inviteProjectMember(id, email);
+    const invitation = await memberRepository.inviteProjectMember(id, userId, email);
 
     const acceptUrl = buildInvitationAcceptUrl(invitation.id);
     await sendInvitationEmail(email, acceptUrl, project.name);
@@ -77,7 +76,7 @@ class MembersService {
 
       //이미 프로젝트 멤버 확인
 
-      if (await memberRepository.isProjectMember(invitation.projectId, userId)) {
+      if (await memberRepository.isAcceptedMember(invitation.projectId, userId)) {
         throw new ConflictError('이미 프로젝트 멤버입니다.');
       }
 

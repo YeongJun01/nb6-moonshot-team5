@@ -33,8 +33,8 @@ class MembersController {
     }
     const { id } = create(req.params, IdParamsStruct);
 
-    await memberService.acceptProjectMembers(id, req.user.id);
-    res.status(200).send();
+    const result = await memberService.acceptProjectMembers(id, req.user.id);
+    res.status(200).send({ projectId: result.projectId });
   }
 
   async deleteProjectInvitation(req: Request, res: Response) {
