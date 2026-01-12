@@ -84,9 +84,21 @@ class MembersRepository {
     });
   }
 
-  async isProjectMember(projectId: number, userId: number): Promise<boolean> {
-    const member = await this.findProjectMember(projectId, userId);
-    return member !== null;
+  async isAcceptedMember(projectId: number, userId: number): Promise<boolean> {
+    const member = await prisma.projectMember.findUnique({
+      where: { projectId_userId: { projectId, userId } },
+      select: { user: { select: { email: true } } },
+    });
+    if (!member) return false;
+
+    const inv = await prisma.invitation.findUnique({
+      where: { projectId_invitedEmail: { projectId, invitedEmail: member.user.email } },
+      select: { status: true },
+    });
+
+    // 초대 레코드가 없으면 기존멤버(accepted)로 간주
+    // 초대 레코드가 있고 pending면 아직 수락 전
+    return !inv || inv.status === 'accepted';
   }
 
   async deleteProjectMember(projectId: number, userId: number) {
@@ -101,12 +113,26 @@ class MembersRepository {
     return existMember?.id ?? null;
   }
 
-  async inviteProjectMember(projectId: number, email: string) {
-    //기존에 보낸 초대있을 수 있으니 upsert(create + update)
-    return prisma.invitation.upsert({
-      where: { projectId_invitedEmail: { projectId, invitedEmail: email } },
-      update: { status: 'pending' },
-      create: { projectId, invitedEmail: email, status: 'pending' },
+  async inviteProjectMember(projectId: number, userId: number, email: string) {
+    return prisma.$transaction(async (tx) => {
+      const invitation = await tx.invitation.upsert({
+        where: { projectId_invitedEmail: { projectId, invitedEmail: email } },
+        update: { status: 'pending' },
+        create: { projectId, invitedEmail: email, status: 'pending' },
+      });
+
+      // 이미 멤버면 그대로 유지(없으면 생성)
+      await tx.projectMember.upsert({
+        where: { projectId_userId: { projectId, userId } },
+        update: {},
+        create: {
+          projectId,
+          userId,
+          role: 'member',
+        },
+      });
+
+      return invitation;
     });
   }
 

@@ -1,10 +1,10 @@
+import { CreateSubtaskData } from './../repository/subtask-repository';
 import NotFoundError from '../lib/errors/NotFoundError';
 import ForbiddenError from '../lib/errors/ForbiddenError';
-import {
-  subtaskRepository,
-  UpdateSubtaskData,
-  CreateSubtaskData,
-} from '../repository/subtask-repository';
+import { subtaskRepository, UpdateSubtaskData } from '../repository/subtask-repository';
+import { PagePaginationResult } from '../types/pagination';
+import { SubtaskListDTO } from '../dto/subtask-DTO';
+import taskRepository from '../repository/task-repository';
 
 export class SubtaskService {
   private async requireTaskAccess(taskId: number, userId: number) {
@@ -45,11 +45,12 @@ export class SubtaskService {
       taskId,
     };
 
-    return subtaskRepository.create(data);
+    return await subtaskRepository.create(data);
   }
 
-  async getByTaskId(taskId: number, userId: number) {
+  async getByTaskId(taskId: number, userId: number): Promise<SubtaskListDTO[]> {
     await this.requireTaskAccess(taskId, userId);
+
     return subtaskRepository.findManyByTaskId(taskId);
   }
 

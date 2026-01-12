@@ -10,14 +10,14 @@ const commentTaskRouter = express.Router();
  * @swagger
  * tags:
  *   - name: TaskComment
- *     description: 태스크 댓글 API
+ *     description: 할 일 댓글 API
  */
 
 /**
  * @swagger
  * /tasks/{id}/comments:
  *   post:
- *     summary: 태스크 댓글 생성
+ *     summary: 할 일 댓글 생성
  *     tags: [TaskComment]
  *     security:
  *       - bearerAuth: []
@@ -46,7 +46,7 @@ const commentTaskRouter = express.Router();
  *       403:
  *         description: 프로젝트 멤버 아님
  *       404:
- *         description: 태스크 없음
+ *         description: 할 일 없음
  */
 commentTaskRouter.post(
   '/:id/comments',
@@ -59,7 +59,7 @@ commentTaskRouter.post(
  * @swagger
  * /tasks/{id}/comments:
  *   get:
- *     summary: 태스크 댓글 목록 조회
+ *     summary: 할 일 댓글 목록 조회
  *     tags: [TaskComment]
  *     security:
  *       - bearerAuth: []
@@ -77,7 +77,7 @@ commentTaskRouter.post(
  *       403:
  *         description: 프로젝트 멤버 아님
  *       404:
- *         description: 태스크 없음
+ *         description: 할 일 없음
  */
 commentTaskRouter.get(
   '/:id/comments',

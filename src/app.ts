@@ -10,6 +10,7 @@ import memberRouter from './router/member-router';
 import invitationRouter from './router/invitation-router';
 import subtaskRouter from './router/subtask-router';
 import attachmentRouter from './router/attachment-router';
+import subtaskTaskRouter from './router/subtask-task-router';
 import path from 'node:path';
 import userRouter from './router/user-router';
 import commentTaskRouter from './router/comment-task-router';
@@ -65,6 +66,7 @@ app.use('/tasks', taskRouter);
 //comment
 app.use('/tasks', commentTaskRouter);
 app.use('/comments', commentRouter);
+app.use('/tasks', subtaskTaskRouter);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 //404 처리 미들웨어 및 에러 핸들러 등록

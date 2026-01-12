@@ -1,4 +1,4 @@
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3Njc5MzQ2MjIsImV4cCI6MTc2NzkzODIyMn0.F8Z_MN2XH8_mrBLfQh1tZwhTv2B75ccn1nxWY5RqOXM
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NjgyMDA2NzYsImV4cCI6MTc2ODIwNDI3Nn0.FdICxWlKdbJDiwO5_GEYq0kbWJ2HiucP9VUep1xOHPY
 ###프로젝트 생성
 POST http://localhost:3001/projects
 Content-Type: application/json
@@ -10,7 +10,11 @@ Authorization: Bearer {{accessToken}}
 }
 
 ###프로젝트 조회
-GET http://localhost:3001/projects/18
+GET http://localhost:3001/projects/9
+Authorization: Bearer {{accessToken}}
+
+###프로젝트 조회 쿼리
+GET http://localhost:3001/projects/9
 Authorization: Bearer {{accessToken}}
 
 ###

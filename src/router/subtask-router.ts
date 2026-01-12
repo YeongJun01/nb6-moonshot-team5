@@ -11,14 +11,14 @@ const subtaskRouter = Router();
  * @swagger
  * tags:
  *   - name: Subtask
- *     description: 서브태스크 API
+ *     description: 하위 할 일 API
  */
 
 /**
  * @swagger
  * /subtasks/{subtaskId}:
  *   get:
- *     summary: 서브태스크 단건 조회
+ *     summary: 하위 할 일 단건 조회
  *     tags: [Subtask]
  *     security:
  *       - bearerAuth: []
@@ -35,7 +35,7 @@ const subtaskRouter = Router();
  *       401:
  *         description: 인증 필요
  *       404:
- *         description: 서브태스크 없음
+ *         description: 하위 할 일 없음
  */
 subtaskRouter.get(
   '/:subtaskId',
@@ -48,7 +48,7 @@ subtaskRouter.get(
  * @swagger
  * /subtasks/{subtaskId}:
  *   patch:
- *     summary: 서브태스크 수정
+ *     summary: 하위 할 일 수정
  *     tags: [Subtask]
  *     security:
  *       - bearerAuth: []
@@ -79,7 +79,7 @@ subtaskRouter.get(
  *       401:
  *         description: 인증 필요
  *       404:
- *         description: 서브태스크 없음
+ *         description: 하위 할 일 없음
  */
 subtaskRouter.patch(
   '/:subtaskId',
@@ -89,8 +89,8 @@ subtaskRouter.patch(
     body('title').optional().notEmpty().withMessage('제목을 입력해주세요'),
     body('status')
       .optional()
-      .isIn(['todo', 'done'])
-      .withMessage('상태는 TODO 또는 DONE이어야 합니다'),
+      .isIn(['todo', 'done', 'in_progress'])
+      .withMessage('상태는 TODO 또는 IN_PROGRESS, DONE이어야 합니다'),
     validate,
   ],
   asyncHandler(subtaskController.updateSubtask.bind(subtaskController)),
@@ -100,7 +100,7 @@ subtaskRouter.patch(
  * @swagger
  * /subtasks/{subtaskId}:
  *   delete:
- *     summary: 서브태스크 삭제
+ *     summary: 하위 할 일 삭제
  *     tags: [Subtask]
  *     security:
  *       - bearerAuth: []
@@ -117,7 +117,7 @@ subtaskRouter.patch(
  *       401:
  *         description: 인증 필요
  *       404:
- *         description: 서브태스크 없음
+ *         description: 하위 할 일 없음
  */
 subtaskRouter.delete(
   '/:subtaskId',

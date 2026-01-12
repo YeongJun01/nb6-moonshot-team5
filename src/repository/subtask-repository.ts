@@ -1,4 +1,6 @@
+import { SubtaskListDTO } from '../dto/subtask-DTO';
 import prisma from '../lib/prisma';
+import { PagePaginationResult } from '../types/pagination';
 
 export type SubtaskStatus = 'todo' | 'done';
 
@@ -13,48 +15,60 @@ export interface UpdateSubtaskData {
 }
 
 export class SubtaskRepository {
-  findTaskProjectId(taskId: number) {
-    return prisma.task.findUnique({
+  async findTaskProjectId(taskId: number) {
+    return await prisma.task.findUnique({
       where: { id: taskId },
       select: { projectId: true },
     });
   }
 
-  findMembership(userId: number, projectId: number) {
-    return prisma.projectMember.findFirst({
+  async findMembership(userId: number, projectId: number) {
+    return await prisma.projectMember.findFirst({
       where: { userId, projectId },
     });
   }
 
-  create(data: CreateSubtaskData) {
-    return prisma.subTask.create({
+  async create(data: CreateSubtaskData) {
+    return await prisma.subTask.create({
       data,
     });
   }
 
-  findManyByTaskId(taskId: number) {
-    return prisma.subTask.findMany({
+  async findManyByTaskId(taskId: number): Promise<SubtaskListDTO[]> {
+    const data = (await prisma.subTask.findMany({
       where: { taskId },
       orderBy: { createdAt: 'asc' },
-    });
+      select: {
+        id: true,
+        title: true,
+        taskId: true,
+        status: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    })) as unknown as SubtaskListDTO[];
+    // const total = await prisma.subTask.count({ where: { taskId } });
+
+    // const result: PagePaginationResult<SubtaskListDTO> = { data, total };
+    return data;
   }
 
-  findByIdWithProjectId(subtaskId: number) {
-    return prisma.subTask.findUnique({
+  async findByIdWithProjectId(subtaskId: number) {
+    return await prisma.subTask.findUnique({
       where: { id: subtaskId },
       include: { task: { select: { projectId: true } } },
     });
   }
 
-  update(subtaskId: number, data: UpdateSubtaskData) {
-    return prisma.subTask.update({
+  async update(subtaskId: number, data: UpdateSubtaskData) {
+    return await prisma.subTask.update({
       where: { id: subtaskId },
       data,
     });
   }
 
-  delete(subtaskId: number) {
-    return prisma.subTask.delete({
+  async delete(subtaskId: number) {
+    return await prisma.subTask.delete({
       where: { id: subtaskId },
     });
   }

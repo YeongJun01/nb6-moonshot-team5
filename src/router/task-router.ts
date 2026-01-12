@@ -9,14 +9,14 @@ const router = Router();
  * @swagger
  * tags:
  *   - name: Task
- *     description: 태스크 API
+ *     description: 할 일 API
  */
 
 /**
  * @swagger
  * /tasks/{taskId}:
  *   get:
- *     summary: 태스크 단건 조회
+ *     summary: 할 일 단건 조회
  *     tags: [Task]
  *     security:
  *       - bearerAuth: []
@@ -31,7 +31,7 @@ const router = Router();
  *       401:
  *         description: 인증 필요
  *       404:
- *         description: 태스크 없음
+ *         description: 할 일 없음
  */
 router.get('/:taskId', authenticateAccess, asyncHandler(taskController.findTaskById));
 
@@ -39,7 +39,7 @@ router.get('/:taskId', authenticateAccess, asyncHandler(taskController.findTaskB
  * @swagger
  * /tasks/{taskId}:
  *   patch:
- *     summary: 태스크 수정
+ *     summary: 할 일 수정
  *     tags: [Task]
  *     security:
  *       - bearerAuth: []
@@ -66,7 +66,7 @@ router.get('/:taskId', authenticateAccess, asyncHandler(taskController.findTaskB
  *       401:
  *         description: 인증 필요
  *       404:
- *         description: 태스크 없음
+ *         description: 할 일 없음
  */
 router.patch('/:taskId', authenticateAccess, asyncHandler(taskController.updateTask));
 
@@ -74,7 +74,7 @@ router.patch('/:taskId', authenticateAccess, asyncHandler(taskController.updateT
  * @swagger
  * /tasks/{taskId}:
  *   delete:
- *     summary: 태스크 삭제
+ *     summary: 할 일 삭제
  *     tags: [Task]
  *     security:
  *       - bearerAuth: []
@@ -89,7 +89,7 @@ router.patch('/:taskId', authenticateAccess, asyncHandler(taskController.updateT
  *       401:
  *         description: 인증 필요
  *       404:
- *         description: 태스크 없음
+ *         description: 할 일 없음
  */
 router.delete('/:taskId', authenticateAccess, asyncHandler(taskController.deleteTask));
 

@@ -145,7 +145,7 @@ projectRouter.delete(
  * @swagger
  * /projects/{id}/tasks:
  *   get:
- *     summary: 프로젝트 태스크 목록 조회
+ *     summary: 프로젝트 할 일 목록 조회
  *     tags: [Project]
  *     security:
  *       - bearerAuth: []
@@ -176,7 +176,7 @@ projectRouter.get(
  * @swagger
  * /projects/{id}/tasks:
  *   post:
- *     summary: 프로젝트 태스크 생성
+ *     summary: 프로젝트 할 일 생성
  *     tags: [Project]
  *     security:
  *       - bearerAuth: []
