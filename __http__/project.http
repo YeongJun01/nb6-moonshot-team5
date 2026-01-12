@@ -1,4 +1,4 @@
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2LCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzY3OTM0NDg5LCJleHAiOjE3Njc5MzgwODl9.49rWHYY4yCczEZJk23oyBSP8gHl37St04vWVO3Wo2EE
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3Njc5MzQ2MjIsImV4cCI6MTc2NzkzODIyMn0.F8Z_MN2XH8_mrBLfQh1tZwhTv2B75ccn1nxWY5RqOXM
 ###프로젝트 생성
 POST http://localhost:3001/projects
 Content-Type: application/json

@@ -15,6 +15,8 @@ import userRouter from './router/user-router';
 import commentTaskRouter from './router/comment-task-router';
 import taskRouter from './router/task-router';
 import commentRouter from './router/comment-router';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './swagger';
 
 //express app 생성
 const app = express();
@@ -64,6 +66,7 @@ app.use('/tasks', taskRouter);
 app.use('/tasks', commentTaskRouter);
 app.use('/comments', commentRouter);
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 //404 처리 미들웨어 및 에러 핸들러 등록
 app.use(defaultNotFoundHandler);
 app.use(errorHandler);
