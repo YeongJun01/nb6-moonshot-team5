@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import taskService from '../service/task-service';
-import { TaskStatus } from '@prisma/client';
 import { FindProjectTasksQuery } from '../dto/task-DTO';
 import NotFoundError from '../lib/errors/NotFoundError';
+import BadRequestError from '../lib/errors/BadRequestError';
 
 class TaskController {
   // 프로젝트 내 할 일 조회
@@ -57,8 +57,11 @@ class TaskController {
   // 할 일 업데이트
   async updateTask(req: Request, res: Response) {
     const taskId = Number(req.params.taskId);
-    const updatedTask = await taskService.updateTask(taskId, req.body);
+    if (Number.isNaN(taskId)) {
+      throw new BadRequestError('유효하지 않은 taskId입니다.1');
+    }
 
+    const updatedTask = await taskService.updateTask(taskId, req.body);
     res.status(200).json(updatedTask);
   }
 
