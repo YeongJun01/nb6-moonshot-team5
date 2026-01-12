@@ -148,8 +148,10 @@ class MembersRepository {
   }
 
   async createProjectMember(projectId: number, userId: number) {
-    return prisma.projectMember.create({
-      data: {
+    return prisma.projectMember.upsert({
+      where: { projectId_userId: { projectId, userId } },
+      update: {},
+      create: {
         projectId,
         userId,
         role: 'member',
