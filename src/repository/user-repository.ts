@@ -1,5 +1,6 @@
 import prisma from '../lib/prisma';
-import { Prisma } from '@prisma/client';
+import { Prisma, TaskStatus } from '@prisma/client';
+import { FindMyTasksQueryDTO } from '../dto/user-task-DTO';
 
 class UserRepository {
   async findUserById(userId: number) {
@@ -77,14 +78,35 @@ class UserRepository {
     return result;
   }
 
-  async findTasksByUserProjects(userId: number) {
+  async findMyTasks(userId: number, query: FindMyTasksQueryDTO) {
+    const where: Prisma.TaskWhereInput = {
+      ...(query.project_id ? { projectId: query.project_id } : {}),
+      ...(query.status ? { status: query.status as TaskStatus } : {}),
+      // assignee_id가 오면 그 담당자 기준, 안오면 "나(userId)"가 담당자인 것만
+      assigneeId: query.assignee_id ?? userId,
+      ...(query.keyword
+        ? {
+            OR: [
+              { title: { contains: query.keyword, mode: 'insensitive' } },
+              { description: { contains: query.keyword, mode: 'insensitive' } },
+            ],
+          }
+        : {}),
+    };
+
     return prisma.task.findMany({
-      where: {
-        project: {
-          projectMembers: {
-            some: { userId },
+      where,
+      orderBy: { createdAt: 'desc' },
+      include: {
+        user: {
+          select: { id: true, name: true, email: true, profileImage: true },
+        },
+        taskTags: {
+          include: {
+            tag: { select: { id: true, name: true } },
           },
         },
+        attachments: { select: { url: true } },
       },
     });
   }
