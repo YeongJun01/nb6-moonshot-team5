@@ -22,6 +22,8 @@ import { swaggerSpec } from './swagger';
 //express app 생성
 const app = express();
 
+app.set('trust proxy', 1);
+
 //첨부파일
 app.use('/files', attachmentRouter);
 //JSON 파싱 미들웨어 설정
