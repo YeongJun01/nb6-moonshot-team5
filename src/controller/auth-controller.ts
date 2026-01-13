@@ -59,7 +59,7 @@ class AuthController {
         ' ',
       ),
       access_type: 'offline',
-      //prompt: 'consent',
+      prompt: 'consent',
       include_granted_scopes: 'true',
     });
 
