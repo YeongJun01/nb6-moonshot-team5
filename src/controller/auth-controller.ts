@@ -76,12 +76,11 @@ class AuthController {
 
     const { accessToken, refreshToken } = await authService.handleGoogleCallback(code);
 
-    const isProd = process.env.NODE_ENV === 'production';
-
     res.cookie('access-token', accessToken, {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
+      domain: '.moonshot-frontend.onrender.com',
       path: '/',
       maxAge: 1000 * 60 * 60, // 1시간
     });
@@ -91,6 +90,7 @@ class AuthController {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
+      domain: '.moonshot-frontend.onrender.com',
       path: '/',
       maxAge: 1000 * 60 * 60 * 24 * 14, // 14일
     });
