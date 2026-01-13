@@ -80,8 +80,8 @@ class AuthController {
 
     res.cookie('access-token', accessToken, {
       httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? 'none' : 'lax',
+      secure: true,
+      sameSite: 'none',
       path: '/',
       maxAge: 1000 * 60 * 60, // 1시간
     });
@@ -89,8 +89,8 @@ class AuthController {
     // refresh token
     res.cookie('refresh-token', refreshToken, {
       httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? 'none' : 'lax',
+      secure: true,
+      sameSite: 'none',
       path: '/',
       maxAge: 1000 * 60 * 60 * 24 * 14, // 14일
     });
