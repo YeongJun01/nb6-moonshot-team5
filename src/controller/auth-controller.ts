@@ -95,7 +95,7 @@ class AuthController {
     });
 
     //  redirect
-    res.redirect(`${process.env.FRONTEND_URL}/callback`); //유저 api 만든 뒤 수정
+    res.redirect(`${process.env.FRONTEND_URL}/projects`); //유저 api 만든 뒤 수정
   }
   //로그아웃
   async logout(req: Request, res: Response) {
