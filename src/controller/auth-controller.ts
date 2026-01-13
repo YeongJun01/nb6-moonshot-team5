@@ -77,7 +77,8 @@ class AuthController {
     const { accessToken, refreshToken } = await authService.handleGoogleCallback(code);
 
     const isProd = process.env.NODE_ENV === 'production';
-
+    console.log(isProd);
+    console.log(accessToken);
     res.cookie('access-token', accessToken, {
       httpOnly: true,
       secure: isProd, // 🔴 로컬 false / 배포 true
