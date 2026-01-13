@@ -10,7 +10,7 @@ const options: swaggerJSDoc.Options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000',
+        url: 'https://nb6-moonshot-team5.onrender.com',
         description: 'local',
       },
     ],
