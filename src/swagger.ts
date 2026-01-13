@@ -10,7 +10,7 @@ const options: swaggerJSDoc.Options = {
     },
     servers: [
       {
-        url: 'http://localhost:3001',
+        url: 'http://localhost:3000',
         description: 'local',
       },
     ],
@@ -22,22 +22,23 @@ const options: swaggerJSDoc.Options = {
           bearerFormat: 'JWT',
         },
       },
-    },
-    schemas: {
-      ErrorResponse: {
-        type: 'object',
-        properties: {
-          message: { type: 'string', example: '에러 메시지' },
+
+      schemas: {
+        ErrorResponse: {
+          type: 'object',
+          properties: {
+            message: { type: 'string', example: '에러 메시지' },
+          },
+          required: ['message'],
         },
-        required: ['message'],
-      },
-      TokensResponse: {
-        type: 'object',
-        properties: {
-          accessToken: { type: 'string', example: 'eyJhbGciOi...' },
-          refreshToken: { type: 'string', example: 'eyJhbGciOi...' },
+        TokensResponse: {
+          type: 'object',
+          properties: {
+            accessToken: { type: 'string', example: 'eyJhbGciOi...' },
+            refreshToken: { type: 'string', example: 'eyJhbGciOi...' },
+          },
+          required: ['accessToken', 'refreshToken'],
         },
-        required: ['accessToken', 'refreshToken'],
       },
     },
     security: [
