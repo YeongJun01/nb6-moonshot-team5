@@ -1,0 +1,32 @@
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NjgyMDA2NzYsImV4cCI6MTc2ODIwNDI3Nn0.FdICxWlKdbJDiwO5_GEYq0kbWJ2HiucP9VUep1xOHPY
+###프로젝트 생성
+POST http://localhost:3001/projects
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "name": "프로젝트 1",
+  "description": "프로젝트 1 설명"
+}
+
+###프로젝트 조회
+GET http://localhost:3001/projects/9
+Authorization: Bearer {{accessToken}}
+
+###프로젝트 조회 쿼리
+GET http://localhost:3001/projects/9
+Authorization: Bearer {{accessToken}}
+
+###
+PATCH http://localhost:3001/projects/4
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "name": "수정된 프로젝트",
+  "description": "수정된 프로젝트 입니다."
+}
+
+###프로젝트 삭제
+DELETE http://localhost:3001/projects/18
+Authorization: Bearer {{accessToken}}

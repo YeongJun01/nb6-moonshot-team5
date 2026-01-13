@@ -1,0 +1,32 @@
+@url = http://localhost:3001
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2LCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzY3ODU4NDc0LCJleHAiOjE3Njc4NjIwNzR9.q5frnhie-acpW5ASV5HMcCzi01h-coKfRFmxtOTBHoE
+###댓글 생성
+POST {{url}}/tasks/5/comments
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "content": "두번 째 댓글"
+}
+
+###댓글 조회
+GET {{url}}/tasks/5/comments
+Authorization: Bearer {{accessToken}}
+
+
+###
+GET {{url}}/comments/4
+Authorization: Bearer {{accessToken}}
+
+###
+PATCH {{url}}/comments/4
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "content": "댓글 수정!@!@"
+}
+
+###
+DELETE {{url}}/comments/4
+Authorization: Bearer {{accessToken}}

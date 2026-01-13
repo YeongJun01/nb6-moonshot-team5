@@ -1,0 +1,30 @@
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE2LCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzY3ODUzODk5LCJleHAiOjE3Njc4NTc0OTl9._hh8OsfPdJEE6J6oSug1clCJv6ybrwIs9s24VdT-Czs
+###프로젝트 생성
+###프로젝트 멤버 조회
+GET http://localhost:3001/projects/22/users
+Authorization: Bearer {{accessToken}}
+
+###프로젝트 멤버 조회(쿼리)
+GET http://localhost:3001/projects/16/users?page=1&limit=3
+Authorization: Bearer {{accessToken}}
+
+###프로젝트에서 유저 제외하기
+DELETE http://localhost:3001/projects/16/users/11
+Authorization: Bearer {{accessToken}}
+
+###프로젝트에 멤버 초대
+POST http://localhost:3001/projects/16/invitations
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "email" : "pkeonyz@gmail.com"
+}
+
+###멤버 초대 수락
+POST http://localhost:3001/invitations/12/accept
+Authorization: Bearer {{accessToken}}
+
+###멤버 초대 삭제
+DELETE http://localhost:3001/invitations/8
+Authorization: Bearer {{accessToken}}

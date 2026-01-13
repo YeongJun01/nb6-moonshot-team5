@@ -75,7 +75,7 @@ model ProjectMember {
   id        Int        @id @default(autoincrement())
   projectId Int
   userId    Int
-  role      MemberRole @default(MEMBER)
+  role      MemberRole @default(member)
   createdAt DateTime   @default(now())
 
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
@@ -109,8 +109,10 @@ model Task {
   endYear     Int
   endMonth    Int
   endDay      Int
-  status      TaskStatus @default(TODO)
+  status      TaskStatus @default(todo)
   assigneeId  Int?
+
+  googleEventId String? @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -128,7 +130,7 @@ model SubTask {
   id     Int        @id @default(autoincrement())
   title  String
   taskId Int
-  status TaskStatus @default(TODO)
+  status TaskStatus @default(todo)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -151,7 +153,7 @@ model Comment {
 
 model Tag {
   id   Int    @id @default(autoincrement())
-  name String
+  name String @unique
 
   taskTags TaskTag[]
 }
@@ -175,18 +177,18 @@ model TaskAttachment {
 }
 
 enum TaskStatus {
-  TODO //해야함
-  IN_PROGRESS //진행중
-  DONE //완료
+  todo //해야함
+  in_progress //진행중
+  done //완료
 }
 
 enum InvitationStatus {
-  PENDING //초대보냄
-  ACCEPTED //수락
-  REJECTED //거절
+  pending //초대보냄
+  accepted //수락
+  rejected //거절
 }
 
 enum MemberRole {
-  MEMBER //프로젝트 멤버
-  OWNER //프로젝트 오너(소유자, 팀장)
+  member //프로젝트 멤버
+  owner //프로젝트 오너(소유자, 팀장)
 }

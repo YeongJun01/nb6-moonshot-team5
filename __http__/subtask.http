@@ -1,0 +1,30 @@
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NjgxOTQ5NzcsImV4cCI6MTc2ODE5ODU3N30.u1g4NkxvNhw3ot-D7Q-mD7osmywZemPD-O23jRpFpas
+###
+POST http://localhost:3001/tasks/9/subtasks
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    "title": "hihi"
+}
+###
+GET http://localhost:3001/tasks/9/subtasks
+Authorization: Bearer {{accessToken}}
+
+###
+GET http://localhost:3001/subtasks/1
+Authorization: Bearer {{accessToken}}
+
+###
+PATCH http://localhost:3001/subtasks/2
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+   "status" : "in_progress"
+}
+
+
+###
+DELETE http://localhost:3001/subtasks/3
+Authorization: Bearer {{accessToken}}

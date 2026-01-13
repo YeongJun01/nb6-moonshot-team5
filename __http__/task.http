@@ -1,0 +1,47 @@
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NjgyMDA2NzYsImV4cCI6MTc2ODIwNDI3Nn0.FdICxWlKdbJDiwO5_GEYq0kbWJ2HiucP9VUep1xOHPY
+###
+GET http://localhost:3001/projects/9/tasks
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+###
+POST http://localhost:3001/projects/9/tasks
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+    	"title": "string",
+		"description" : "할일 내용입니다.",
+	"startYear": 2025,
+	"startMonth": 1,
+	"startDay": 7,
+	"endYear": 2025,
+	"endMonth": 1,
+	"endDay": 10,
+	"status": "todo",
+	"tags": ["many","hello"],
+	"attachments":[]
+}
+
+###
+GET http://localhost:3001/projects/9/tasks?order=desc
+Authorization: Bearer {{accessToken}}
+
+###
+GET http://localhost:3001/tasks/3
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+###
+PATCH http://localhost:3001/tasks/3
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+ "tags": ["hi","bye"]
+}
+
+###
+DELETE http://localhost:3001/tasks/3
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}

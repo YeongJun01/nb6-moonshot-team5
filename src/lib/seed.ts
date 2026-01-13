@@ -8,14 +8,14 @@ async function main() {
     data: {
       name: '김코드',
       email: 'code@example.com',
-      password: '1234',
+      password: 'password1234',
     },
   });
   const user2 = await prisma.user.create({
     data: {
       name: '김봇',
       email: 'bot@example.com',
-      password: '1234',
+      password: 'password1234',
     },
   });
 
@@ -23,7 +23,7 @@ async function main() {
     data: {
       name: '코드잇',
       email: 'codeit@example.com',
-      password: '1234',
+      password: 'password1234',
     },
   });
 
@@ -31,7 +31,7 @@ async function main() {
     data: {
       name: '노션왕',
       email: 'notionking@example.com',
-      password: '1234',
+      password: 'password1234',
     },
   });
 
@@ -39,7 +39,7 @@ async function main() {
     data: {
       name: '정리왕',
       email: 'king@example.com',
-      password: '1234',
+      password: 'password1234',
     },
   });
 
@@ -70,7 +70,7 @@ async function main() {
     data: {
       projectId: project.id,
       userId: user1.id,
-      role: 'OWNER',
+      role: 'owner',
     },
   });
 
@@ -78,7 +78,7 @@ async function main() {
     data: {
       projectId: project2.id,
       userId: user3.id,
-      role: 'OWNER',
+      role: 'owner',
     },
   });
 
@@ -86,31 +86,31 @@ async function main() {
     data: {
       projectId: project3.id,
       userId: user4.id,
-      role: 'OWNER',
+      role: 'owner',
     },
   });
 
   //멤버 생성(프로젝트 오너 포함)
   await prisma.projectMember.createMany({
     data: [
-      { projectId: project.id, userId: user3.id, role: 'MEMBER' },
-      { projectId: project.id, userId: user2.id, role: 'MEMBER' },
+      { projectId: project.id, userId: user3.id, role: 'member' },
+      { projectId: project.id, userId: user2.id, role: 'member' },
     ],
   });
 
   await prisma.projectMember.createMany({
     data: [
-      { projectId: project2.id, userId: user2.id, role: 'MEMBER' },
-      { projectId: project2.id, userId: user1.id, role: 'MEMBER' },
-      { projectId: project2.id, userId: user4.id, role: 'MEMBER' },
+      { projectId: project2.id, userId: user2.id, role: 'member' },
+      { projectId: project2.id, userId: user1.id, role: 'member' },
+      { projectId: project2.id, userId: user4.id, role: 'member' },
     ],
   });
 
   await prisma.projectMember.createMany({
     data: [
-      { projectId: project3.id, userId: user2.id, role: 'MEMBER' },
-      { projectId: project3.id, userId: user5.id, role: 'MEMBER' },
-      { projectId: project3.id, userId: user1.id, role: 'MEMBER' },
+      { projectId: project3.id, userId: user2.id, role: 'member' },
+      { projectId: project3.id, userId: user5.id, role: 'member' },
+      { projectId: project3.id, userId: user1.id, role: 'member' },
     ],
   });
 
@@ -125,7 +125,7 @@ async function main() {
       endYear: 2026,
       endMonth: 1,
       endDay: 17,
-      status: TaskStatus.IN_PROGRESS,
+      status: TaskStatus.in_progress,
       assigneeId: user2.id,
     },
   });
@@ -141,7 +141,7 @@ async function main() {
       endYear: 2026,
       endMonth: 1,
       endDay: 7,
-      status: TaskStatus.TODO,
+      status: TaskStatus.todo,
       assigneeId: user4.id,
     },
   });
@@ -151,7 +151,7 @@ async function main() {
     data: {
       title: 'ERD 작성',
       taskId: task.id,
-      status: TaskStatus.TODO,
+      status: TaskStatus.todo,
     },
   });
 
@@ -180,7 +180,7 @@ async function main() {
     data: {
       projectId: project.id,
       invitedEmail: 'invite@test.com',
-      status: InvitationStatus.PENDING,
+      status: InvitationStatus.pending,
     },
   });
 }
