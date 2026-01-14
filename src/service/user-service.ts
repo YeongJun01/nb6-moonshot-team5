@@ -1,6 +1,15 @@
 import UnauthorizedError from '../lib/errors/UnauthorizedError';
 import userRepository from '../repository/user-repository';
 import { FindMyTasksQueryDTO } from '../dto/user-task-DTO';
+import bcrypt from 'bcrypt';
+import NotFoundError from '../lib/errors/NotFoundError';
+
+interface UpdateUserInput {
+  currentPassword?: string;
+  newPassword?: string;
+  name?: string;
+  profileImage?: string;
+}
 
 function ymdToNumber(y: number, m: number, d: number) {
   return y * 10000 + m * 100 + d;
@@ -31,13 +40,37 @@ class UserService {
     return userWithoutPassword;
   }
 
-  async updateMe(userId: number, data: any) {
-    if (!userId) {
-      throw new UnauthorizedError('해당 유저가 없습니다.');
-    }
-    const user = await userRepository.updateUser(userId, data);
+  async updateUser(userId: number, data: UpdateUserInput) {
+    const user = await userRepository.findUserById(userId);
+    if (!user) throw new NotFoundError('사용자를 찾을 수 없습니다.');
 
-    const { password, ...userWithoutPassword } = user;
+    let newHashedPassword;
+
+    // 비밀번호 변경 로직 (프론트에서 확인 체크 했으므로 newPasswordConfirm 필요 없음)
+    if (data.newPassword) {
+      if (!data.currentPassword) {
+        throw new Error('현재 비밀번호를 입력해주세요.');
+      }
+      if (!user.password) {
+        throw new NotFoundError('비밀번호가 없습니다.');
+      }
+
+      const isMatch = await bcrypt.compare(data.currentPassword, user.password);
+      if (!isMatch) throw new Error('현재 비밀번호가 일치하지 않습니다.');
+
+      // 새 비밀번호 해시
+      newHashedPassword = await bcrypt.hash(data.newPassword, 10);
+    }
+
+    // Prisma update
+    const updatedUser = await userRepository.update(userId, {
+      password: newHashedPassword ?? undefined,
+      name: data.name,
+      profileImage: data.profileImage,
+    });
+
+    // 비밀번호 제외하고 반환
+    const { password, ...userWithoutPassword } = updatedUser;
     return userWithoutPassword;
   }
 

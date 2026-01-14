@@ -19,9 +19,21 @@ class UserController {
     if (!req.user) {
       throw new UnauthorizedError('로그인이 필요합니다.');
     }
+
     const userId = req.user.id;
-    const result = await userService.updateMe(userId, req.body);
-    res.send(result);
+
+    // 프론트에서 보내는 값 그대로 받음
+    const { currentPassword, newPassword, name, profileImage } = req.body;
+
+    // 서비스 호출 (newPasswordConfirm 체크는 프ㅌ론트에서 이미 처리)
+    const updatedUser = await userService.updateUser(userId, {
+      currentPassword,
+      newPassword,
+      name,
+      profileImage,
+    });
+
+    res.json(updatedUser);
   }
 
   async getMyProjects(req: Request, res: Response) {

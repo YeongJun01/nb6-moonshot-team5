@@ -15,7 +15,15 @@ class UserRepository {
     });
   }
 
-  async updateUser(userId: number, data: Partial<Prisma.UserUpdateInput>) {
+  async update(
+    userId: number,
+    data: {
+      password?: string;
+      email?: string;
+      name?: string;
+      profileImage?: string;
+    },
+  ) {
     return prisma.user.update({
       where: { id: userId },
       data,
