@@ -76,27 +76,27 @@ class AuthController {
 
     const { accessToken, refreshToken } = await authService.handleGoogleCallback(code);
 
+    const isProd = process.env.NODE_ENV === 'production';
+    console.log(isProd);
+    console.log(accessToken);
     res.cookie('access-token', accessToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      domain: '.moonshot-frontend.onrender.com',
+      secure: isProd, // 🔴 로컬 false / 배포 true
+      sameSite: isProd ? 'none' : 'lax', // 🔴 로컬 lax
       path: '/',
-      maxAge: 1000 * 60 * 60, // 1시간
+      maxAge: 1000 * 60 * 60,
     });
 
-    // refresh token
     res.cookie('refresh-token', refreshToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      domain: '.moonshot-frontend.onrender.com',
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
       path: '/',
-      maxAge: 1000 * 60 * 60 * 24 * 14, // 14일
+      maxAge: 1000 * 60 * 60 * 24 * 14,
     });
 
     //  redirect
-    res.redirect(`${process.env.FRONTEND_URL}/callback`); //유저 api 만든 뒤 수정
+    res.redirect(`${process.env.FRONTEND_URL}/projects`); //유저 api 만든 뒤 수정
   }
   //로그아웃
   async logout(req: Request, res: Response) {
