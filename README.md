@@ -5,19 +5,14 @@
 > 코드잇 노드 백엔드 6기
 > 백엔드 중급 프로젝트 : MoonShot
 
-📎 **팀 협업 문서:** [링크 게시 예정]
+📎 **팀 협업 문서:**
+[Notion](https://www.notion.so/3-5-2ce37787836880979838cc3630150cce)
 
 ---
 
 ## 👥 팀원 구성
 
-| 이름   | 역할                                 | Github                            |
-| ------ | ------------------------------------ | --------------------------------- |
-| 김지수 | 소셜 로그인 / 회원 추가 정보 API     | [웨인 Github](개인 Github 링크)   |
-| 나영준 | 권한 관리 / 반응형 레이아웃 API      | [제이든 Github](개인 Github 링크) |
-| 박건용 | 수강생 정보 관리 / 공용 Button API   | [마크 Github](개인 Github 링크)   |
-| 이광수 | 관리자 API / 회원관리 슬라이더       | [데이지 Github](개인 Github 링크) |
-| 이상휘 | 학생 시간 정보 관리 / 공용 Modal API | [제이 Github](개인 Github 링크)   |
+> 김지수, 나영준, 박건용, 이광수, 이상휘
 
 ---
 
@@ -33,7 +28,7 @@
 - 프로젝트 등록 및 수정, 삭제
 - 할 일, 하위 할 일
 - 멤버 초대 및 추가, 제외
-- 대시보드
+- 구글 캘린더 연동
 
 ---
 
@@ -49,67 +44,49 @@
 
 ## 🧑‍💻 팀원별 구현 기능
 
-### 웨인
+### 김지수
 
-> ![웨인 작업 이미지](첨부 이미지 또는 gif 파일 경로)
-
-- **소셜 로그인 API**
-  - Google OAuth 2.0 기반 로그인 기능 구현
-  - 로그인 후 추가 정보 입력을 위한 API 엔드포인트 개발
-- **회원 추가 정보 입력 API**
-  - 회원 유형(관리자 / 학생)에 따른 조건부 입력 처리 API 구현
+- **댓글 API**
+  - 댓글 생성, 수정, 삭제 기능 구현
 
 ---
 
-### 제이든
+### 나영준
 
-> ![제이든 작업 이미지](첨부 이미지 또는 gif 파일 경로)
-
-- **회원별 권한 관리**
-  - 사용자 역할(Role)에 따라 접근 권한 설정 API 구현
-  - 관리자/일반 사용자 페이지용 조건부 라우팅 기능 추가
-- **반응형 레이아웃 API**
-  - 클라이언트 요청에 맞춰 레이아웃 데이터 제공 API 개발
-
----
-
-### 마크
-
-> ![마크 작업 이미지](첨부 이미지 또는 gif 파일 경로)
-
-- **수강생 정보 관리 API**
-  - `fetch(GET)`으로 수강생 정보 조회 API 구현
-  - 반응형 UI 데이터 구성
-- **공용 Button API**
-  - 공통 버튼 액션을 처리하는 API 개발
+- **프로젝트 설계**
+  - 프로젝트의 기반 폴더 구조 구현
+  - prisma, 에러 class 구현
+- **인증**
+  - 회원가입, 로그인, 토큰 재발급 구현
+- **유저**
+  - 유저에 대한 조회, 수정 구현
+- **첨부파일**
+  - 첨부파일 등록 구현
 
 ---
 
-### 데이지
+### 박건용
 
-> ![데이지 작업 이미지](첨부 이미지 또는 gif 파일 경로)
-
-- **관리자 API**
-  - Path Parameter를 이용한 동적 라우팅 구현
-  - `fetch(PATCH, DELETE)`를 통한 학생 정보 수정 및 탈퇴 처리
-- **CRUD 기능**
-  - 학생 정보 생성·조회·수정·삭제 API 구축
-- **회원관리 슬라이더**
-  - carousel 방식으로 학생 목록 제공 API 구현
+- **프로젝트 API**
+  - 프로젝트에 대한 CRUD 구현
+- **멤버 API**
+  - sendGrid를 활용해 초대 로직 구현
+- **댓글 API**
+  - 댓글 생성, 수정, 삭제 기능 구현
 
 ---
 
-### 제이
+### 이광수
 
-> ![제이 작업 이미지](첨부 이미지 또는 gif 파일 경로)
+- **하위 할 일 API**
+  - 하위 할 일에 대한 CRUD 구현
 
-- **학생 시간 정보 관리 API**
-  - 학생별 시간 정보 조회 API 구현
-  - `fetch(GET)`으로 실시간 접속 현황 관리
-- **수정 및 탈퇴 API**
-  - `fetch(PATCH, DELETE)`로 개인정보 수정 및 탈퇴 처리
-- **공용 Modal API**
-  - 공통 Modal 기능 처리 API 개발
+---
+
+### 이상휘
+
+- **할 일 API**
+  할 일에 대한 CRUD 구현
 
 ---
 
@@ -119,60 +96,117 @@
 NB6-MoonShot-TEAM5
 ├── prisma
 │   ├── migrations
-│   ├── schema.prisma
-│   └── seed.js
-├── src
-│   ├── constrollers
-│   │   ├── badge-controller.js
-│   │   ├── group-controller.js
-│   │   ├── group-like-count-controller.js
-│   │   ├── health-controller.js
-│   │   ├── image-controller.js
-│   │   ├── participant-controller.js
-│   │   ├── ranking-controller.js
-│   │   └── record-controller.js
-│   ├── middlewares
-│   │   ├── error-handler.js
-│   │   └── upload.js
-│   ├── routes
-│   │   ├── group-like-count-routes.js
-│   │   ├── group-routes.js
-│   │   ├── health-routes.js
-│   │   ├── image-routes.js
-│   │   ├── participant-routes.js
-│   │   ├── ranking-routes.js
-│   │   └── record-routes.js
-│   ├── utils
-│   │   ├── date-range.js
-│   │   ├── debug.js
-│   │   ├── discord-msg-utils.js
-│   │   ├── image-utils.js
-│   │   └── prisma.js
-│   ├── validators
-│   │   └── record-validatior.js
-│   └── app.js
-├── .env
-├── .gitignore
-├── .prettierrc
-├── .prettierrc.json
-├── package-lock.json
-├── package.json
-└── README.md
+│   └── schema.prisma
+├── src/
+├─ controller/        # 요청/응답 처리 (HTTP 계층)
+│   ├─ attachment-controller.ts
+│   ├─ auth-controller.ts
+│   ├─ comment-controller.ts
+│   ├─ member-controller.ts
+│   ├─ project-controller.ts
+│   ├─ subtask-controller.ts
+│   ├─ task-controller.ts
+│   └─ user-controller.ts
+│
+├─ router/            # 라우팅 정의
+│   ├─ attachment-router.ts
+│   ├─ auth-router.ts
+│   ├─ comment-router.ts
+│   ├─ comment-task-router.ts
+│   ├─ invitation-router.ts
+│   ├─ member-router.ts
+│   ├─ project-router.ts
+│   ├─ subtask-router.ts
+│   ├─ task-router.ts
+│   └─ user-router.ts
+│
+├─ services/           # 비즈니스 로직
+│   ├─ attachment-service.ts
+│   ├─ auth-sevice.ts
+│   ├─ calendar-service.ts
+│   ├─ comment-service.ts
+│   ├─ member-service.ts
+│   ├─ project-service.ts
+│   ├─ subtask-service.ts
+│   ├─ task-service.ts
+│   └─ user-service.ts
+│
+├─ repositories/       # DB 접근 계층│   ├─ attachment-repository.ts
+│   ├─ auth-repository.ts
+│   ├─ comment-repository.ts
+│   ├─ invitation-repository.ts
+│   ├─ member-repository.ts
+│   ├─ project-repository.ts
+│   ├─ subtask-repository.ts
+│   ├─ task-repository.ts
+│   └─ user-repository.ts
+│
+├─ dtos/               # 요청/응답 DTO
+│   ├─ member-list-DTO.ts
+│   └─ task-DTO.ts
+│
+│
+├─ middleware/         # 공통 미들웨어
+│   ├─ authenticate.ts
+│   ├─ errorHandler.ts
+│   ├─ handlerFn.ts
+│   ├─ requireProjectMember.ts
+│   ├─ upload.ts
+│   └─ validate.ts
+│
+├─ structs/            # 요청 데이터 구조 검증
+│   ├─ auth-structs.ts
+│   ├─ comment-structs.ts
+│   ├─ member-structs.ts
+│   ├─ project-structs.ts
+│   └─ common-structs.ts
+│
+├─ types/              # 타입 정의
+│   ├─ auth.ts
+│   ├─ comment.ts
+│   ├─ express.d.ts
+│   ├─ pagination.ts
+│   ├─ Project.ts
+│   └─ User.ts
+│
+├─ lib/                # 에러 처리 및 사용자 정의
+│   ├─ errors/
+│   │   ├─ BadRequestError.ts
+│   │   ├─ ConflictError.ts
+│   │   ├─ ForbiddenError.ts
+│   │   ├─ NotFoundError.ts
+│   │   ├─ UnauthorizedError.ts
+│   │   └─ ValidationError.ts
+│   │
+│   ├─ constants.ts
+│   ├─ google.ts
+│   ├─ mailer.ts
+│   ├─ prisma.ts
+│   ├─ seed.ts
+│   ├─ token.ts
+│   └─ url.ts
+│
+├─ .env
+├─ .prettierrc
+├─ package.json
+├─ package-lock.json
+├─ tsconfig.json
+└─ app.ts              # express app 설정, 서버 실행
 ```
 
 ---
 
 ## 🌐 구현 홈페이지
 
-[https://www.codeit.kr/](https://www.codeit.kr/)
+[Moonshot](https://moonshot-frontend.onrender.com)
 
 ---
 
 ## 🧠 프로젝트 회고록
 
-> 발표자료 및 회고록 링크: (제작한 발표자료 링크 또는 첨부)
+> [발표자료](https://clever-figolla-8d4d5f.netlify.app/)
 
 ---
 
-📌 **작성일:** 2025-11-03  
+📌 **작성일:** 2025-01-14  
 📌 **작성자:** nb6기 Team5
